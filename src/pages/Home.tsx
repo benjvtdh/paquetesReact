@@ -1,23 +1,35 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
+import {
+  IonButton,
+  IonCol,
+  IonLabel,
+  IonList,
+  IonListHeader,
+  IonPage,
+  IonRouterLink,
+  IonRow,
+} from "@ionic/react";
 
-const Home: React.FC = () => {
+import "./Home.css";
+import Paquete from "../components/Paquete";
+
+const Home: React.FC = ({ paquetes }) => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
-      </IonContent>
+      <IonList>
+        <IonListHeader color="dark">
+          <IonLabel>Listado de Paquetes</IonLabel>
+        </IonListHeader>
+        {paquetes.map((paq) => (
+          <Paquete paquete={paq} key={paq.id} />
+        ))}
+        <IonRow>
+          <IonCol className="ion-text-center">
+            <IonRouterLink routerLink="/agregar-paquete">
+              <IonButton shape="round">Agregar Paquete</IonButton>
+            </IonRouterLink>
+          </IonCol>
+        </IonRow>
+      </IonList>
     </IonPage>
   );
 };
