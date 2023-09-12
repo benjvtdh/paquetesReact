@@ -10,9 +10,9 @@ import "../components/Paquete.css";
 
 const Paquete: React.FC = ({ paquete }) => {
   return (
-    <IonItem href="#">
+    <IonItem button routerLink={`/paquete/${paquete.id}`}>
       <IonIcon icon={cubeOutline} slot="start"></IonIcon>
-      <IonLabel>
+      <IonLabel className="ion-padding">
         ID:{paquete.id} {paquete.objeto}
       </IonLabel>
       <IonLabel>
