@@ -27,8 +27,12 @@ const App: React.FC = () => {
     { id: 3, objeto: "Iphone X", enviado: true },
   ]);
 
-  function handleAgregar(nuevoPaquete) {
-    const nuevoPaqObj = { ...nuevoPaquete, enviado: false };
+  function handleAgregar(idPaquete, objetoPaquete) {
+    const nuevoPaqObj = {
+      id: Number(idPaquete),
+      objeto: objetoPaquete,
+      enviado: false,
+    };
     setPaquetes((paquetes) => [...paquetes, nuevoPaqObj]);
   }
   return (

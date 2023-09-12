@@ -6,9 +6,7 @@ import {
   IonHeader,
   IonInput,
   IonItem,
-  IonLabel,
   IonList,
-  IonListHeader,
   IonPage,
   IonRouterLink,
   IonTitle,
@@ -19,7 +17,13 @@ import { useState } from "react";
 const AgregarPaquete: React.FC = ({ onAgregar }) => {
   const [idPaquete, setIdPaquete] = useState("");
   const [contenido, setContenido] = useState("");
-  const nuevoPaquete = { id: idPaquete, objeto: contenido };
+
+  function handleAgregarSetear() {
+    onAgregar(idPaquete, contenido);
+    setIdPaquete("");
+    setContenido("");
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -51,10 +55,7 @@ const AgregarPaquete: React.FC = ({ onAgregar }) => {
           </IonItem>
 
           <IonRouterLink routerLink="/home">
-            <IonButton shape="round">Devolverse</IonButton>
-          </IonRouterLink>
-          <IonRouterLink routerLink="/home">
-            <IonButton onClick={() => onAgregar(nuevoPaquete)} shape="round">
+            <IonButton onClick={() => handleAgregarSetear()} shape="round">
               Agregar Paquete
             </IonButton>
           </IonRouterLink>

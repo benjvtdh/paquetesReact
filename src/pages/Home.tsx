@@ -20,7 +20,6 @@ import { useContext } from "react";
 
 const Home: React.FC = () => {
   const { paquetesList } = useContext(PaquetesContext);
-  console.log(paquetesList);
   return (
     <IonPage>
       <IonHeader>
