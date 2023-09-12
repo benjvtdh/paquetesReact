@@ -22,22 +22,28 @@ setupIonicReact();
 
 const App: React.FC = () => {
   const [paquetesList, setPaquetes] = useState([
-    { id: 1, objeto: "Ps5 100GB", enviado: false },
-    { id: 2, objeto: "Narnia", enviado: true },
-    { id: 3, objeto: "Iphone X", enviado: true },
+    { id: 1, objeto: "Ps5 100GB", enviado: false, repartidorId: 2 },
+    { id: 2, objeto: "Narnia", enviado: true, repartidorId: 2 },
+    { id: 3, objeto: "Iphone X", enviado: true, repartidorId: 4 },
   ]);
 
-  function handleAgregar(idPaquete, objetoPaquete) {
+  const [repartidoresList, setRepartidores] = useState([
+    { repartidorId: 2, nombre: "Benjamin Cortes" },
+    { repartidorId: 4, nombre: "Anibaldo Villegas" },
+  ]);
+
+  function handleAgregar(idPaquete, objetoPaquete, idRepartidor) {
     const nuevoPaqObj = {
       id: Number(idPaquete),
       objeto: objetoPaquete,
       enviado: false,
+      repartidorId: idRepartidor,
     };
     setPaquetes((paquetes) => [...paquetes, nuevoPaqObj]);
   }
   return (
     <IonApp>
-      <PaquetesContext.Provider value={{ paquetesList }}>
+      <PaquetesContext.Provider value={{ paquetesList, repartidoresList }}>
         <IonReactRouter>
           <IonTabs>
             <IonRouterOutlet>

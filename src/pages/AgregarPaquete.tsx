@@ -9,17 +9,22 @@ import {
   IonList,
   IonPage,
   IonRouterLink,
+  IonSelect,
+  IonSelectOption,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { PaquetesContext } from "../interfaces/paquetes";
 
 const AgregarPaquete: React.FC = ({ onAgregar }) => {
   const [idPaquete, setIdPaquete] = useState("");
   const [contenido, setContenido] = useState("");
+  const [idRepartidor, setIdRepartidor] = useState("");
+  const { repartidoresList } = useContext(PaquetesContext);
 
   function handleAgregarSetear() {
-    onAgregar(idPaquete, contenido);
+    onAgregar(idPaquete, contenido, idRepartidor);
     setIdPaquete("");
     setContenido("");
   }
@@ -52,6 +57,23 @@ const AgregarPaquete: React.FC = ({ onAgregar }) => {
               value={contenido}
               onIonChange={(e) => setContenido(e.detail.value)}
             ></IonInput>
+          </IonItem>
+          <IonItem>
+            <IonSelect
+              label="Repartidor"
+              placeholder="Seleccione Repartidor"
+              value={idRepartidor}
+              onIonChange={(e) => setIdRepartidor(e.detail.value)}
+            >
+              {repartidoresList.map((repartidor) => (
+                <IonSelectOption
+                  key={repartidor.repartidorId}
+                  value={repartidor.repartidorId}
+                >
+                  {repartidor.nombre}
+                </IonSelectOption>
+              ))}
+            </IonSelect>
           </IonItem>
 
           <IonRouterLink routerLink="/home">

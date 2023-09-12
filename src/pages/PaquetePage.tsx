@@ -1,5 +1,6 @@
 import {
-  IonAvatar,
+  IonBackButton,
+  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -31,14 +32,20 @@ interface RouteParams {
 }
 
 const PaquetePage: React.FC = () => {
-  const { paquetesList } = useContext(PaquetesContext);
+  const { paquetesList, repartidoresList } = useContext(PaquetesContext);
   const { id } = useParams<RouteParams>();
   const paquete = paquetesList.find((paq) => paq.id === Number(id));
+  const repartidor = repartidoresList.find(
+    (repartidor) => repartidor.repartidorId === paquete.repartidorId
+  );
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonBackButton />
+          </IonButtons>
           <IonTitle>Ver Paquete</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -52,7 +59,7 @@ const PaquetePage: React.FC = () => {
             <IonList>
               <IonItem>
                 <IonIcon slot="start" icon={person}></IonIcon>
-                <IonLabel>Encargado: </IonLabel>
+                <IonLabel>Repartidor: {repartidor.nombre} </IonLabel>
               </IonItem>
 
               <IonItem>
