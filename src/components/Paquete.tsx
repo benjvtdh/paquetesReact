@@ -12,9 +12,8 @@ const Paquete: React.FC = ({ paquete }) => {
   return (
     <IonItem button routerLink={`/paquete/${paquete.id}`}>
       <IonIcon icon={cubeOutline} slot="start"></IonIcon>
-      <IonLabel className="ion-padding">
-        ID:{paquete.id} {paquete.objeto}
-      </IonLabel>
+      <IonLabel>ID: {paquete.id}</IonLabel>
+      <IonLabel>{paquete.objeto}</IonLabel>
       <IonLabel>
         <b>Estado: </b>
         <IonIcon

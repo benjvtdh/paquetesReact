@@ -17,12 +17,16 @@ import {
 import { useContext, useState } from "react";
 import { PaquetesContext } from "../interfaces/paquetes";
 
-const AgregarPaquete: React.FC = ({ onAgregar }) => {
+interface Props {
+  onAgregar: (idPaquete, objetoPaquete, idRepartidor) => void;
+}
+
+const AgregarPaquete: React.FC<Props> = ({ onAgregar }) => {
   const [idPaquete, setIdPaquete] = useState("");
   const [contenido, setContenido] = useState("");
   const [idRepartidor, setIdRepartidor] = useState("");
   const { repartidoresList } = useContext(PaquetesContext);
-
+  console.log(typeof repartidoresList);
   function handleAgregarSetear() {
     onAgregar(idPaquete, contenido, idRepartidor);
     setIdPaquete("");

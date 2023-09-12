@@ -15,11 +15,12 @@ import {
 
 import "./Home.css";
 import Paquete from "../components/Paquete";
+import Repartidor from "../components/Repartidor";
 import { PaquetesContext } from "../interfaces/paquetes";
 import { useContext } from "react";
 
 const Home: React.FC = () => {
-  const { paquetesList } = useContext(PaquetesContext);
+  const { paquetesList, repartidoresList } = useContext(PaquetesContext);
   return (
     <IonPage>
       <IonHeader>
@@ -42,6 +43,12 @@ const Home: React.FC = () => {
               </IonRouterLink>
             </IonCol>
           </IonRow>
+        </IonList>
+        <IonList>
+          <IonListHeader>Repartidores</IonListHeader>
+          {repartidoresList.map((repartidor) => (
+            <Repartidor key={repartidor.repartidorId} repartidor={repartidor} />
+          ))}
         </IonList>
       </IonContent>
     </IonPage>
