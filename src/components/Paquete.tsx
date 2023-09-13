@@ -7,8 +7,15 @@ import {
 } from "ionicons/icons";
 
 import "../components/Paquete.css";
+interface Props {
+  paquete: {
+    id: number;
+    objeto: string;
+    enviado: boolean;
+  };
+}
 
-const Paquete: React.FC = ({ paquete }) => {
+const Paquete: React.FC<Props> = ({ paquete }) => {
   return (
     <IonItem button routerLink={`/paquete/${paquete.id}`}>
       <IonIcon icon={cubeOutline} slot="start"></IonIcon>
