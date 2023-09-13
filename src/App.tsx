@@ -15,6 +15,7 @@ import { homeOutline, addCircleOutline } from "ionicons/icons";
 import Home from "./pages/Home";
 import AgregarPaquete from "./pages/AgregarPaquete";
 import PaquetePage from "./pages/PaquetePage";
+import RepartidorPage from "./pages/RepartidorPage";
 import { PaquetesContext } from "./interfaces/paquetes";
 import { useState } from "react";
 
@@ -58,6 +59,9 @@ const App: React.FC = () => {
               </Route>
               <Route exact path="/agregar-paquete">
                 <AgregarPaquete onAgregar={handleAgregar} />
+              </Route>
+              <Route exact path="/repartidor/:repartidorId">
+                <RepartidorPage />
               </Route>
             </IonRouterOutlet>
 
