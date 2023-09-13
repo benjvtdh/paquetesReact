@@ -54,7 +54,7 @@ const RepartidorPage: React.FC = () => {
           <IonCardContent>
             <IonList>
               {paquetesRepartidor.map((paq) => (
-                <IonItem>
+                <IonItem key={paq.objeto}>
                   <IonIcon slot="start" icon={logoDropbox}></IonIcon>
                   <IonLabel>ID: {paq.id}</IonLabel>
                   <IonLabel>{paq.objeto}</IonLabel>

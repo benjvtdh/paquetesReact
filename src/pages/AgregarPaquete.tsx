@@ -26,7 +26,7 @@ const AgregarPaquete: React.FC<Props> = ({ onAgregar }) => {
   const [contenido, setContenido] = useState("");
   const [idRepartidor, setIdRepartidor] = useState("");
   const { repartidoresList } = useContext(PaquetesContext);
-  console.log(typeof repartidoresList);
+
   function handleAgregarSetear() {
     onAgregar(idPaquete, contenido, idRepartidor);
     setIdPaquete("");
@@ -38,7 +38,7 @@ const AgregarPaquete: React.FC<Props> = ({ onAgregar }) => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonBackButton />
+            <IonBackButton></IonBackButton>
           </IonButtons>
           <IonTitle>Agregar Paquete</IonTitle>
         </IonToolbar>

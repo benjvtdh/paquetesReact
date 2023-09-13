@@ -11,7 +11,7 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { homeOutline, addCircleOutline } from "ionicons/icons";
+import { home, addCircle, personAdd } from "ionicons/icons";
 import Home from "./pages/Home";
 import AgregarPaquete from "./pages/AgregarPaquete";
 import PaquetePage from "./pages/PaquetePage";
@@ -67,13 +67,13 @@ const App: React.FC = () => {
 
             <IonTabBar slot="bottom">
               <IonTabButton tab="home" href="/home">
-                <IonIcon icon={homeOutline} />
+                <IonIcon icon={home} />
                 <IonLabel>Home</IonLabel>
               </IonTabButton>
 
-              <IonTabButton tab="agregar" href="/agregar-paquete">
-                <IonIcon icon={addCircleOutline} />
-                <IonLabel>Agregar</IonLabel>
+              <IonTabButton tab="agregar-paquete" href="/agregar-paquete">
+                <IonIcon icon={addCircle} />
+                <IonLabel>Agregar paquete</IonLabel>
               </IonTabButton>
             </IonTabBar>
           </IonTabs>
