@@ -14,21 +14,19 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useContext, useState } from "react";
-import { PaquetesContext } from "../interfaces/paquetes";
+import { useState } from "react";
 
-interface Props {
-  onAgregar: (idPaquete, objetoPaquete, idRepartidor) => void;
-}
+import { agregarPaq } from "../interfaces/paquetesInterface";
+import { usePaquetes } from "../contexts/PaquetesContext";
 
-const AgregarPaquete: React.FC<Props> = ({ onAgregar }) => {
+const AgregarPaquete: React.FC = () => {
   const [idPaquete, setIdPaquete] = useState("");
   const [contenido, setContenido] = useState("");
   const [idRepartidor, setIdRepartidor] = useState("");
-  const { repartidoresList } = useContext(PaquetesContext);
+  const { repartidoresList, agregarPaquete } = usePaquetes();
 
   function handleAgregarSetear() {
-    onAgregar(idPaquete, contenido, idRepartidor);
+    agregarPaquete(Number(idPaquete), contenido, Number(idRepartidor));
     setIdPaquete("");
     setContenido("");
   }

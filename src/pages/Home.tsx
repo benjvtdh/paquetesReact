@@ -1,5 +1,4 @@
 import {
-  IonButton,
   IonCol,
   IonContent,
   IonHeader,
@@ -7,7 +6,6 @@ import {
   IonList,
   IonListHeader,
   IonPage,
-  IonRouterLink,
   IonRow,
   IonTitle,
   IonToggle,
@@ -17,11 +15,12 @@ import {
 import "./Home.css";
 import Paquete from "../components/Paquete";
 import Repartidor from "../components/Repartidor";
-import { PaquetesContext } from "../interfaces/paquetes";
-import { useContext, useState } from "react";
+
+import { useState } from "react";
+import { usePaquetes } from "../contexts/PaquetesContext";
 
 const Home: React.FC = () => {
-  const { paquetesList, repartidoresList } = useContext(PaquetesContext);
+  const { paquetesList, repartidoresList } = usePaquetes();
   const [ordenarNoEntregados, setOrdenarNoEntrados] = useState(false);
 
   const paquetes = ordenarNoEntregados

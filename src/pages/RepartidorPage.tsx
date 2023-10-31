@@ -17,7 +17,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useParams } from "react-router";
-import { PaquetesContext } from "../interfaces/paquetes";
+import { PaquetesContext, usePaquetes } from "../contexts/PaquetesContext";
 import { useContext } from "react";
 import { checkmarkCircle, closeCircle, logoDropbox } from "ionicons/icons";
 
@@ -25,7 +25,7 @@ interface RouteParams {
   repartidorId: string;
 }
 const RepartidorPage: React.FC = () => {
-  const { paquetesList, repartidoresList } = useContext(PaquetesContext);
+  const { paquetesList, repartidoresList } = usePaquetes();
   const { repartidorId } = useParams<RouteParams>();
   const repartidor = repartidoresList.find(
     (repartidor) => repartidor.repartidorId === Number(repartidorId)

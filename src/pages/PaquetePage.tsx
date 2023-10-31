@@ -16,9 +16,9 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useContext } from "react";
+
 import { useParams } from "react-router";
-import { PaquetesContext } from "../interfaces/paquetes";
+
 import {
   airplane,
   calendarNumber,
@@ -26,13 +26,14 @@ import {
   closeCircle,
   person,
 } from "ionicons/icons";
+import { usePaquetes } from "../contexts/PaquetesContext";
 
 interface RouteParams {
   id: string;
 }
 
 const PaquetePage: React.FC = () => {
-  const { paquetesList, repartidoresList } = useContext(PaquetesContext);
+  const { paquetesList, repartidoresList } = usePaquetes();
   const { id } = useParams<RouteParams>();
   const paquete = paquetesList.find((paq) => paq.id === Number(id));
   const repartidor = repartidoresList.find(

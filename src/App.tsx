@@ -12,39 +12,21 @@ import {
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { home, addCircle, personAdd } from "ionicons/icons";
+
 import Home from "./pages/Home";
 import AgregarPaquete from "./pages/AgregarPaquete";
 import PaquetePage from "./pages/PaquetePage";
 import RepartidorPage from "./pages/RepartidorPage";
-import { PaquetesContext } from "./interfaces/paquetes";
-import { useState } from "react";
+
+import Login from "./pages/Login";
+import { PaquetesProvider } from "./contexts/PaquetesProvider";
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const [paquetesList, setPaquetes] = useState([
-    { id: 1, objeto: "Ps5 100GB", enviado: false, repartidorId: 2 },
-    { id: 2, objeto: "Narnia", enviado: true, repartidorId: 2 },
-    { id: 3, objeto: "Iphone X", enviado: true, repartidorId: 4 },
-  ]);
-
-  const [repartidoresList, setRepartidores] = useState([
-    { repartidorId: 2, nombre: "Benjamin Cortes" },
-    { repartidorId: 4, nombre: "Anibaldo Villegas" },
-  ]);
-
-  function handleAgregar(idPaquete, objetoPaquete, idRepartidor) {
-    const nuevoPaqObj = {
-      id: Number(idPaquete),
-      objeto: objetoPaquete,
-      enviado: false,
-      repartidorId: idRepartidor,
-    };
-    setPaquetes((paquetes) => [...paquetes, nuevoPaqObj]);
-  }
   return (
     <IonApp>
-      <PaquetesContext.Provider value={{ paquetesList, repartidoresList }}>
+      <PaquetesProvider>
         <IonReactRouter>
           <IonTabs>
             <IonRouterOutlet>
@@ -54,11 +36,14 @@ const App: React.FC = () => {
               <Route exact path="/">
                 <Redirect to="/home" />
               </Route>
+              <Route exact path="/login">
+                <Login />
+              </Route>
               <Route exact path="/paquete/:id">
                 <PaquetePage />
               </Route>
               <Route exact path="/agregar-paquete">
-                <AgregarPaquete onAgregar={handleAgregar} />
+                <AgregarPaquete />
               </Route>
               <Route exact path="/repartidor/:repartidorId">
                 <RepartidorPage />
@@ -78,7 +63,7 @@ const App: React.FC = () => {
             </IonTabBar>
           </IonTabs>
         </IonReactRouter>
-      </PaquetesContext.Provider>
+      </PaquetesProvider>
     </IonApp>
   );
 };
