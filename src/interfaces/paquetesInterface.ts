@@ -9,9 +9,11 @@ export interface RepartidorInterface {
   nombre: string;
 }
 export interface IPaqueteContext {
+  loggedIn: boolean;
   paquetesList: PaqueteInterface[];
   repartidoresList: RepartidorInterface[];
   agregarPaquete: agregarPaq;
+  onLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type agregarPaq = (

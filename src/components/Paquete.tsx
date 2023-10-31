@@ -17,7 +17,7 @@ interface Props {
 
 const Paquete: React.FC<Props> = ({ paquete }) => {
   return (
-    <IonItem button routerLink={`/paquete/${paquete.id}`}>
+    <IonItem button routerLink={`/user/paquete/${paquete.id}`}>
       <IonIcon icon={cubeOutline} slot="start"></IonIcon>
       <IonLabel>ID: {paquete.id}</IonLabel>
       <IonLabel>{paquete.objeto}</IonLabel>

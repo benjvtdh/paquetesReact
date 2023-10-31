@@ -20,7 +20,7 @@ import { useState } from "react";
 import { usePaquetes } from "../contexts/PaquetesContext";
 
 const Home: React.FC = () => {
-  const { paquetesList, repartidoresList } = usePaquetes();
+  const { paquetesList, repartidoresList, loggedIn } = usePaquetes();
   const [ordenarNoEntregados, setOrdenarNoEntrados] = useState(false);
 
   const paquetes = ordenarNoEntregados

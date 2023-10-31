@@ -19,12 +19,16 @@ const repartidores: RepartidorInterface[] = [
 
 interface props {
   children: JSX.Element | JSX.Element[];
+  loggedIn: boolean;
+  onLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const PaquetesProvider = ({ children }: props) => {
+// Provider for PaquetesContext
+export const PaquetesProvider = ({ children, loggedIn, onLoggedIn }: props) => {
   const [paquetesList, setPaquetesList] = useState(paquetes);
   const [repartidoresList, setRepartidoresList] = useState(repartidores);
 
+  // Function for add a Paquete
   const agregarPaquete: agregarPaq = function (
     idPaquete,
     objetoPaquete,
@@ -41,7 +45,13 @@ export const PaquetesProvider = ({ children }: props) => {
 
   return (
     <PaquetesContext.Provider
-      value={{ paquetesList, repartidoresList, agregarPaquete }}
+      value={{
+        paquetesList,
+        repartidoresList,
+        agregarPaquete,
+        loggedIn,
+        onLoggedIn,
+      }}
     >
       {children}
     </PaquetesContext.Provider>

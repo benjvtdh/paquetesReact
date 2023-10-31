@@ -10,7 +10,7 @@ interface Props {
 
 const Repartidor: React.FC<Props> = ({ repartidor }) => {
   return (
-    <IonItem button routerLink={`/repartidor/${repartidor.repartidorId}`}>
+    <IonItem button routerLink={`/user/repartidor/${repartidor.repartidorId}`}>
       <IonIcon slot="start" icon={person}></IonIcon>
       <IonLabel>Repartidor ID: {repartidor.repartidorId}</IonLabel>
       <IonLabel>{repartidor.nombre}</IonLabel>
