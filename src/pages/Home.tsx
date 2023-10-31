@@ -17,7 +17,7 @@ import Paquete from "../components/Paquete";
 import Repartidor from "../components/Repartidor";
 
 import { useState } from "react";
-import { usePaquetes } from "../contexts/PaquetesContext";
+import { usePaquetes } from "../hooks/usePaquetes";
 
 const Home: React.FC = () => {
   const { paquetesList, repartidoresList, loggedIn } = usePaquetes();

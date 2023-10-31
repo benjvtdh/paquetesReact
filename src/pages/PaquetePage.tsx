@@ -26,7 +26,7 @@ import {
   closeCircle,
   person,
 } from "ionicons/icons";
-import { usePaquetes } from "../contexts/PaquetesContext";
+import { usePaquetes } from "../hooks/usePaquetes";
 
 interface RouteParams {
   id: string;

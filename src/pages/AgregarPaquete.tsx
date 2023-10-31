@@ -17,7 +17,7 @@ import {
 import { useState } from "react";
 
 import { agregarPaq } from "../interfaces/paquetesInterface";
-import { usePaquetes } from "../contexts/PaquetesContext";
+import { usePaquetes } from "../hooks/usePaquetes";
 
 const AgregarPaquete: React.FC = () => {
   const [idPaquete, setIdPaquete] = useState("");

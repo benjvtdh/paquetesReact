@@ -7,13 +7,12 @@ import {
   IonList,
   IonLoading,
   IonPage,
-  IonText,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { auth } from "../firebase";
 import { useState } from "react";
-import { usePaquetes } from "../contexts/PaquetesContext";
+import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
 
 const Login: React.FC = () => {
@@ -21,22 +20,19 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const { loggedIn } = usePaquetes();
   const [status, setStatus] = useState({ loading: false, error: false });
+
+  const handleLogin = async () => {
+    try {
+      setStatus({ loading: true, error: false });
+      const credential = await auth.signInWithEmailAndPassword(email, password);
+    } catch (error) {
+      setStatus({ loading: false, error: true });
+    }
+  };
+
   if (loggedIn) {
     return <Redirect to="/user/home" />;
   }
-  const handleLogin = async (e) => {
-    try {
-      e.preventDefault();
-      console.log("password: ", password);
-      setStatus({ loading: true, error: false });
-      const credential = await auth.signInWithEmailAndPassword(email, password);
-
-      console.log("credential: ", credential);
-    } catch (error) {
-      setStatus({ loading: false, error: true });
-      console.log("error:", error.message);
-    }
-  };
 
   return (
     <IonPage>
@@ -72,8 +68,11 @@ const Login: React.FC = () => {
           </IonItem>
         </IonList>
 
-        <IonButton onClick={(e) => handleLogin(e)} shape="round">
+        <IonButton onClick={handleLogin} shape="round">
           Ingresar
+        </IonButton>
+        <IonButton expand="block" fill="clear" routerLink="/register">
+          ¿No tienes una cuenta?
         </IonButton>
         <IonLoading isOpen={status.loading}></IonLoading>
       </IonContent>

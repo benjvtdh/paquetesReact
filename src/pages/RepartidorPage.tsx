@@ -17,8 +17,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useParams } from "react-router";
-import { PaquetesContext, usePaquetes } from "../contexts/PaquetesContext";
-import { useContext } from "react";
+import { usePaquetes } from "../hooks/usePaquetes";
 import { checkmarkCircle, closeCircle, logoDropbox } from "ionicons/icons";
 
 interface RouteParams {

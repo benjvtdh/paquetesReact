@@ -5,11 +5,15 @@ import {
   IonInput,
   IonItem,
   IonList,
+  IonLoading,
   IonPage,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { useState } from "react";
+import { auth } from "../firebase";
+import { usePaquetes } from "../hooks/usePaquetes";
+import { Redirect } from "react-router";
 
 const validateEmail = (email: string) => {
   return email.match(
@@ -18,6 +22,8 @@ const validateEmail = (email: string) => {
 };
 
 const Register: React.FC = () => {
+  const [status, setStatus] = useState({ loading: false, error: false });
+  const { loggedIn } = usePaquetes();
   const [email, setEmail] = useState("");
   const [emailInvalid, setEmailInvalid] = useState(false);
   const [password, setPassword] = useState("");
@@ -26,10 +32,24 @@ const Register: React.FC = () => {
   const [edad, setEdad] = useState(null);
   const [edadInvalid, setEdadInvalid] = useState(false);
 
-  function handleRegister() {
-    setPasswordInvalid(password.length < 6);
-    setEdadInvalid(edad < 18);
-    setEmailInvalid(validateEmail(email) === null);
+  const handleRegister = async () => {
+    try {
+      setStatus({ loading: true, error: false });
+      //   setEmailInvalid(validateEmail(email) === null);
+      //   setPasswordInvalid(password.length < 6);
+      // setEdadInvalid(edad < 18);
+      const credential = await auth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
+      console.log("credential: ", credential);
+    } catch (error) {
+      setStatus({ loading: false, error: true });
+      console.log(error);
+    }
+  };
+  if (loggedIn) {
+    return <Redirect to="/user/home" />;
   }
 
   return (
@@ -48,7 +68,7 @@ const Register: React.FC = () => {
               value={email}
               label="Email"
               labelPlacement="floating"
-              onIonChange={(e) => setEmail(e.detail.value)}
+              onIonInput={(e) => setEmail(e.detail.value)}
               errorText="Ingresar correo válido"
             ></IonInput>
           </IonItem>
@@ -60,10 +80,10 @@ const Register: React.FC = () => {
               labelPlacement="floating"
               errorText="La contraseña debe ser mayor a 6 caracteres"
               value={password}
-              onIonChange={(e) => setPassword(e.detail.value)}
+              onIonInput={(e) => setPassword(e.detail.value)}
             ></IonInput>
           </IonItem>
-          <IonItem>
+          {/* <IonItem>
             <IonInput
               type="text"
               label="Nombre de Usuario"
@@ -82,11 +102,16 @@ const Register: React.FC = () => {
               errorText="Debes ser mayor a 18 años"
               labelPlacement="floating"
             ></IonInput>
-          </IonItem>
+          </IonItem> */}
         </IonList>
-        <IonButton expand="block" onClick={handleRegister}>
-          Registrar
+
+        <IonButton onClick={handleRegister} shape="round">
+          Crear cuenta
         </IonButton>
+        <IonButton expand="block" fill="clear" routerLink="/login">
+          ¿Ya tienes una cuenta?
+        </IonButton>
+        <IonLoading isOpen={status.loading}></IonLoading>
       </IonContent>
     </IonPage>
   );

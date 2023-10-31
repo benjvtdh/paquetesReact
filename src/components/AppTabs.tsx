@@ -12,8 +12,8 @@ import PaquetePage from "../pages/PaquetePage";
 import AgregarPaquete from "../pages/AgregarPaquete";
 import RepartidorPage from "../pages/RepartidorPage";
 import { addCircle, home, settings } from "ionicons/icons";
-import { usePaquetes } from "../contexts/PaquetesContext";
 import SettingsPage from "../pages/SettingsPage";
+import { usePaquetes } from "../hooks/usePaquetes";
 
 // Protected Pages
 const AppTabs: React.FC = () => {
