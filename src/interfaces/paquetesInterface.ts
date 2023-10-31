@@ -13,7 +13,6 @@ export interface IPaqueteContext {
   paquetesList: PaqueteInterface[];
   repartidoresList: RepartidorInterface[];
   agregarPaquete: agregarPaq;
-  onLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export type agregarPaq = (

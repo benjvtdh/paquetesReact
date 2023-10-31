@@ -19,22 +19,25 @@ import { Redirect } from "react-router";
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loggedIn, onLoggedIn } = usePaquetes();
+  const { loggedIn } = usePaquetes();
   const [status, setStatus] = useState({ loading: false, error: false });
   if (loggedIn) {
     return <Redirect to="/user/home" />;
   }
-  // const handleLogin = async () => {
-  //   try {
-  //     setStatus({ loading: true, error: false });
-  //     const credential = await auth.signInWithEmailAndPassword(email, password);
-  //     setStatus({ loading: false, error: false });
-  //     console.log("credential: ", credential);
-  //   } catch (error) {
-  //     setStatus({ loading: false, error: true });
-  //     console.log("error:", error.message);
-  //   }
-  // };
+  const handleLogin = async (e) => {
+    try {
+      e.preventDefault();
+      console.log("password: ", password);
+      setStatus({ loading: true, error: false });
+      const credential = await auth.signInWithEmailAndPassword(email, password);
+
+      console.log("credential: ", credential);
+    } catch (error) {
+      setStatus({ loading: false, error: true });
+      console.log("error:", error.message);
+    }
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -46,26 +49,31 @@ const Login: React.FC = () => {
         <IonList>
           <IonItem>
             <IonInput
-              label="Email"
-              placeholder="test@gmail.com"
               type="email"
+              placeholder="test@gmail.com"
+              label="Correo"
+              labelPlacement="floating"
               value={email}
-              onIonChange={(e) => setEmail(e.detail.value)}
+              onIonInput={(event) => setEmail(event.detail.value)}
             ></IonInput>
           </IonItem>
 
           <IonItem>
             <IonInput
-              label="Password input"
+              label="Contraseña"
               type="password"
-              value="password"
-              onIonChange={(e) => setPassword(e.detail.value)}
+              labelPlacement="floating"
+              placeholder="*********"
+              value={password}
+              onIonInput={(event) => setPassword(event.detail.value)}
+              errorText="Contraseña o correo incorrecto"
+              className={status.error ? "ion-invalid ion-touched" : ""}
             ></IonInput>
           </IonItem>
         </IonList>
-        {status.error && <IonText color="danger">Invalid Credentials</IonText>}
-        <IonButton onClick={() => onLoggedIn(true)} shape="round">
-          Loginc
+
+        <IonButton onClick={(e) => handleLogin(e)} shape="round">
+          Ingresar
         </IonButton>
         <IonLoading isOpen={status.loading}></IonLoading>
       </IonContent>

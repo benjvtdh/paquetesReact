@@ -11,8 +11,9 @@ import Home from "../pages/Home";
 import PaquetePage from "../pages/PaquetePage";
 import AgregarPaquete from "../pages/AgregarPaquete";
 import RepartidorPage from "../pages/RepartidorPage";
-import { addCircle, home } from "ionicons/icons";
+import { addCircle, home, settings } from "ionicons/icons";
 import { usePaquetes } from "../contexts/PaquetesContext";
+import SettingsPage from "../pages/SettingsPage";
 
 // Protected Pages
 const AppTabs: React.FC = () => {
@@ -38,6 +39,9 @@ const AppTabs: React.FC = () => {
         <Route exact path="/user/repartidor/:repartidorId">
           <RepartidorPage />
         </Route>
+        <Route exact path="/user/settings">
+          <SettingsPage />
+        </Route>
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
@@ -49,6 +53,11 @@ const AppTabs: React.FC = () => {
         <IonTabButton tab="agregar-paquete" href="/user/agregar-paquete">
           <IonIcon icon={addCircle} />
           <IonLabel>Agregar paquete</IonLabel>
+        </IonTabButton>
+
+        <IonTabButton tab="settings" href="/user/settings">
+          <IonIcon icon={settings} />
+          <IonLabel>Configuración</IonLabel>
         </IonTabButton>
       </IonTabBar>
     </IonTabs>
