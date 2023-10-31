@@ -14,6 +14,7 @@ import RepartidorPage from "../pages/RepartidorPage";
 import { addCircle, home } from "ionicons/icons";
 import { usePaquetes } from "../contexts/PaquetesContext";
 
+// Protected Pages
 const AppTabs: React.FC = () => {
   const { loggedIn } = usePaquetes();
 

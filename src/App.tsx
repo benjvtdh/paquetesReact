@@ -1,4 +1,4 @@
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
 import { PaquetesProvider } from "./contexts/PaquetesProvider";
@@ -7,6 +7,7 @@ import AppTabs from "./components/AppTabs";
 
 import Login from "./pages/Login";
 import { useEffect, useState } from "react";
+import NotFoundPage from "./pages/NotFoundPage";
 
 setupIonicReact();
 
@@ -17,12 +18,12 @@ const App: React.FC = () => {
   //     console.log("onAuthStateChanged:", user);
   //   });
   // }, []);
-  console.log(loggedIn);
+
   return (
     <IonApp>
       <PaquetesProvider loggedIn={loggedIn} onLoggedIn={setLoggedIn}>
         <IonReactRouter>
-          <IonRouterOutlet>
+          <Switch>
             <Route exact path="/login">
               <Login />
             </Route>
@@ -30,7 +31,10 @@ const App: React.FC = () => {
               <AppTabs />
             </Route>
             <Redirect exact path="/" to="/user/home" />
-          </IonRouterOutlet>
+            <Route>
+              <NotFoundPage />
+            </Route>
+          </Switch>
         </IonReactRouter>
       </PaquetesProvider>
     </IonApp>
