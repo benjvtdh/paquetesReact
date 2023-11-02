@@ -16,14 +16,17 @@ import { useAuth } from "./hooks/useAuth";
 setupIonicReact();
 
 const App: React.FC = () => {
-  const authState = useAuth();
+  const { loading, auth } = useAuth();
 
-  if (authState.loading) {
+  if (loading) {
     return <IonLoading isOpen />;
   }
+
+  console.log(auth);
+
   return (
     <IonApp>
-      <PaquetesProvider loggedIn={authState.loggedIn}>
+      <PaquetesProvider auth={auth}>
         <IonReactRouter>
           <Switch>
             <Route exact path="/login">

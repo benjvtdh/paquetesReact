@@ -1,4 +1,5 @@
 import {
+  Auth,
   PaqueteInterface,
   RepartidorInterface,
   agregarPaq,
@@ -19,11 +20,11 @@ const repartidores: RepartidorInterface[] = [
 
 interface props {
   children: JSX.Element | JSX.Element[];
-  loggedIn: boolean;
+  auth: Auth;
 }
 
 // Provider for PaquetesContext
-export const PaquetesProvider = ({ children, loggedIn }: props) => {
+export const PaquetesProvider = ({ children, auth }: props) => {
   const [paquetesList, setPaquetesList] = useState(paquetes);
   const [repartidoresList, setRepartidoresList] = useState(repartidores);
 
@@ -48,7 +49,7 @@ export const PaquetesProvider = ({ children, loggedIn }: props) => {
         paquetesList,
         repartidoresList,
         agregarPaquete,
-        loggedIn,
+        auth,
       }}
     >
       {children}

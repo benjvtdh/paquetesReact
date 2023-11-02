@@ -10,7 +10,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { auth } from "../firebase";
+import { auth as firstAuth } from "../firebase";
 import { useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
@@ -18,19 +18,22 @@ import { Redirect } from "react-router";
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { loggedIn } = usePaquetes();
+  const { auth } = usePaquetes();
   const [status, setStatus] = useState({ loading: false, error: false });
 
   const handleLogin = async () => {
     try {
       setStatus({ loading: true, error: false });
-      const credential = await auth.signInWithEmailAndPassword(email, password);
+      const credential = await firstAuth.signInWithEmailAndPassword(
+        email,
+        password
+      );
     } catch (error) {
       setStatus({ loading: false, error: true });
     }
   };
 
-  if (loggedIn) {
+  if (auth.loggedIn) {
     return <Redirect to="/user/home" />;
   }
 

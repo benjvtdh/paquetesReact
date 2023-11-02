@@ -9,7 +9,7 @@ export interface RepartidorInterface {
   nombre: string;
 }
 export interface IPaqueteContext {
-  loggedIn: boolean;
+  auth: Auth;
   paquetesList: PaqueteInterface[];
   repartidoresList: RepartidorInterface[];
   agregarPaquete: agregarPaq;
@@ -20,3 +20,13 @@ export type agregarPaq = (
   objetoPaquete: string,
   idRepartidor: number
 ) => void;
+
+export interface Auth {
+  loggedIn: boolean;
+  userId?: string;
+}
+
+export interface AuthInit {
+  loading: boolean;
+  auth?: Auth;
+}

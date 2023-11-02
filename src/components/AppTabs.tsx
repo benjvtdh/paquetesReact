@@ -17,10 +17,10 @@ import { usePaquetes } from "../hooks/usePaquetes";
 
 // Protected Pages
 const AppTabs: React.FC = () => {
-  const { loggedIn } = usePaquetes();
+  const { auth } = usePaquetes();
 
   // If user is not logged, is redirected to Login
-  if (!loggedIn) {
+  if (!auth.loggedIn) {
     return <Redirect to="/login" />;
   }
   return (

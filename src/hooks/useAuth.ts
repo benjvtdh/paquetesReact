@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { auth as firebaseAuth } from "../firebase";
+import { AuthInit } from "../interfaces/paquetesInterface";
 
-export function useAuth() {
-  const [authState, setAuthState] = useState({
+export function useAuth(): AuthInit {
+  const [authState, setAuthState] = useState<AuthInit>({
     loading: true,
-    loggedIn: false,
   });
   useEffect(() => {
-    firebaseAuth.onAuthStateChanged((user) => {
-      setAuthState({ loading: false, loggedIn: Boolean(user) });
+    return firebaseAuth.onAuthStateChanged((firebaseUser) => {
+      const auth = firebaseUser
+        ? { loggedIn: true, userId: firebaseUser.uid }
+        : { loggedIn: false };
+      setAuthState({ loading: false, auth });
     });
   }, []);
 
