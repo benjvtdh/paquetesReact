@@ -30,3 +30,11 @@ export interface AuthInit {
   loading: boolean;
   auth?: Auth;
 }
+
+export interface User {
+  username: string;
+  name: string;
+  last_name: string;
+  age: number;
+  cell_number: string;
+}

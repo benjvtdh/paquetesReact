@@ -20,15 +20,16 @@ import { firestore } from "../firebase";
 import { useEffect, useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { callOutline, person } from "ionicons/icons";
+import { User } from "../interfaces/paquetesInterface";
 
 const SettingsPage: React.FC = () => {
-  const [userInfo, setUserInfo] = useState({});
+  const [userInfo, setUserInfo] = useState<User>();
 
   const { auth } = usePaquetes();
   useEffect(() => {
     const usersRef = firestore.collection("users").doc(auth.userId);
     usersRef.get().then((snapshot) => {
-      setUserInfo(snapshot.data());
+      setUserInfo(snapshot.data() as User);
     });
   }, []);
 
@@ -51,18 +52,20 @@ const SettingsPage: React.FC = () => {
               <IonItem>
                 <IonIcon slot="start" icon={person}></IonIcon>
                 <IonLabel>
-                  Nombre: {userInfo.name} {userInfo.last_name}
+                  Nombre: {userInfo?.name} {userInfo?.last_name}
                 </IonLabel>
               </IonItem>
 
               <IonItem>
                 <IonIcon slot="start" icon={callOutline}></IonIcon>
-                <IonLabel>Número de teléfono : {userInfo.cell_number}</IonLabel>
+                <IonLabel>
+                  Número de teléfono : {userInfo?.cell_number}
+                </IonLabel>
               </IonItem>
 
               <IonItem>
                 {/* <IonIcon slot="start" icon={calendarNumber}></IonIcon> */}
-                <IonLabel>Edad: {userInfo.age}</IonLabel>
+                <IonLabel>Edad: {userInfo?.age}</IonLabel>
               </IonItem>
             </IonList>
           </IonCardContent>
