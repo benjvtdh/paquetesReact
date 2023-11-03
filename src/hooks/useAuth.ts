@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { auth as firebaseAuth } from "../firebase";
+import { authUser } from "../firebase";
 import { AuthInit } from "../interfaces/paquetesInterface";
 
 export function useAuth(): AuthInit {
@@ -7,7 +7,7 @@ export function useAuth(): AuthInit {
     loading: true,
   });
   useEffect(() => {
-    return firebaseAuth.onAuthStateChanged((firebaseUser) => {
+    return authUser.onAuthStateChanged((firebaseUser) => {
       const auth = firebaseUser
         ? { loggedIn: true, userId: firebaseUser.uid }
         : { loggedIn: false };

@@ -1,7 +1,16 @@
 import {
   IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
   IonContent,
   IonHeader,
+  IonIcon,
+  IonItem,
+  IonLabel,
+  IonList,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -10,6 +19,7 @@ import { authUser } from "../firebase";
 import { firestore } from "../firebase";
 import { useEffect, useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
+import { callOutline, person } from "ionicons/icons";
 
 const SettingsPage: React.FC = () => {
   const [userInfo, setUserInfo] = useState({});
@@ -31,6 +41,32 @@ const SettingsPage: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
+        <IonCard>
+          <IonCardHeader>
+            <IonCardTitle>Usuario : {userInfo?.username}</IonCardTitle>
+            <IonCardSubtitle>{}</IonCardSubtitle>
+          </IonCardHeader>
+          <IonCardContent>
+            <IonList>
+              <IonItem>
+                <IonIcon slot="start" icon={person}></IonIcon>
+                <IonLabel>
+                  Nombre: {userInfo.name} {userInfo.last_name}
+                </IonLabel>
+              </IonItem>
+
+              <IonItem>
+                <IonIcon slot="start" icon={callOutline}></IonIcon>
+                <IonLabel>Número de teléfono : {userInfo.cell_number}</IonLabel>
+              </IonItem>
+
+              <IonItem>
+                {/* <IonIcon slot="start" icon={calendarNumber}></IonIcon> */}
+                <IonLabel>Edad: {userInfo.age}</IonLabel>
+              </IonItem>
+            </IonList>
+          </IonCardContent>
+        </IonCard>
         <IonButton
           color="medium"
           expand="block"

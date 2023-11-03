@@ -11,7 +11,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { useState } from "react";
-import { auth } from "../firebase";
+import { authUser } from "../firebase";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
 
@@ -23,7 +23,7 @@ const validateEmail = (email: string) => {
 
 const Register: React.FC = () => {
   const [status, setStatus] = useState({ loading: false, error: false });
-  const { loggedIn } = usePaquetes();
+  const { auth } = usePaquetes();
   const [email, setEmail] = useState("");
   const [emailInvalid, setEmailInvalid] = useState(false);
   const [password, setPassword] = useState("");
@@ -38,7 +38,7 @@ const Register: React.FC = () => {
       //   setEmailInvalid(validateEmail(email) === null);
       //   setPasswordInvalid(password.length < 6);
       // setEdadInvalid(edad < 18);
-      const credential = await auth.createUserWithEmailAndPassword(
+      const credential = await authUser.createUserWithEmailAndPassword(
         email,
         password
       );
@@ -48,7 +48,7 @@ const Register: React.FC = () => {
       console.log(error);
     }
   };
-  if (loggedIn) {
+  if (auth.loggedIn) {
     return <Redirect to="/user/home" />;
   }
 

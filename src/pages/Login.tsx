@@ -10,7 +10,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { auth as firstAuth } from "../firebase";
+import { authUser } from "../firebase";
 import { useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
@@ -24,7 +24,7 @@ const Login: React.FC = () => {
   const handleLogin = async () => {
     try {
       setStatus({ loading: true, error: false });
-      const credential = await firstAuth.signInWithEmailAndPassword(
+      const credential = await authUser.signInWithEmailAndPassword(
         email,
         password
       );
