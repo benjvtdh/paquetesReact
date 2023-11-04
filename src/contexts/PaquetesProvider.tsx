@@ -25,8 +25,8 @@ interface props {
 
 // Provider for PaquetesContext
 export const PaquetesProvider = ({ children, auth }: props) => {
-  const [paquetesList, setPaquetesList] = useState(paquetes);
-  const [repartidoresList, setRepartidoresList] = useState(repartidores);
+  const [paquetesList, setPaquetesList] = useState([]);
+  const [repartidoresList, setRepartidoresList] = useState([]);
 
   // Function for add a Paquete
   const agregarPaquete: agregarPaq = function (

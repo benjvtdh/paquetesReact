@@ -16,12 +16,20 @@ import "./Home.css";
 import Paquete from "../components/Paquete";
 import Repartidor from "../components/Repartidor";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
+import { firestore } from "../firebase";
 
 const Home: React.FC = () => {
   const { paquetesList, repartidoresList } = usePaquetes();
   const [ordenarNoEntregados, setOrdenarNoEntrados] = useState(false);
+  useEffect(() => {
+    async function fetchPaquetes() {
+      const paquetesRef = firestore.collection("paquetes");
+      const snapshot = await paquetesRef.get();
+    }
+    fetchPaquetes();
+  }, []);
 
   const paquetes = ordenarNoEntregados
     ? paquetesList.slice().filter((paq) => !paq.enviado)
