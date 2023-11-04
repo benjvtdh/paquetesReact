@@ -154,7 +154,6 @@ const Register: React.FC = () => {
               placeholder="xxxx-xxxx"
               value={cellPhone}
               onIonInput={(e) => {
-                console.log(countryCode + e.detail.value);
                 setCellPhone(e.detail.value);
               }}
             ></IonInput>
