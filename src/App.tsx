@@ -22,8 +22,6 @@ const App: React.FC = () => {
     return <IonLoading isOpen />;
   }
 
-  console.log(auth);
-
   return (
     <IonApp>
       <PaquetesProvider auth={auth}>

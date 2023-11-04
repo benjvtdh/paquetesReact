@@ -11,6 +11,7 @@ import {
   IonItem,
   IonLabel,
   IonList,
+  IonLoading,
   IonPage,
   IonTitle,
   IonToolbar,
@@ -24,16 +25,26 @@ import { User } from "../interfaces/paquetesInterface";
 
 const SettingsPage: React.FC = () => {
   const [userInfo, setUserInfo] = useState<User>();
+  const [loading, setLoading] = useState(false);
 
   const { auth } = usePaquetes();
   useEffect(() => {
-    const usersRef = firestore.collection("users").doc(auth.userId);
-    usersRef.get().then((snapshot) => {
-      setUserInfo(snapshot.data() as User);
-    });
+    async function fetchUserInfo() {
+      try {
+        setLoading(true);
+        const usersRef = firestore.collection("users").doc(auth.userId);
+        const res = await usersRef.get();
+        const data = await res.data();
+        setUserInfo(data as User);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchUserInfo();
   }, []);
 
-  console.log(userInfo);
   return (
     <IonPage>
       <IonHeader>
@@ -51,16 +62,12 @@ const SettingsPage: React.FC = () => {
             <IonList>
               <IonItem>
                 <IonIcon slot="start" icon={person}></IonIcon>
-                <IonLabel>
-                  Nombre: {userInfo?.name} {userInfo?.last_name}
-                </IonLabel>
+                <IonLabel>Nombre: {userInfo?.name}</IonLabel>
               </IonItem>
 
               <IonItem>
                 <IonIcon slot="start" icon={callOutline}></IonIcon>
-                <IonLabel>
-                  Número de teléfono : {userInfo?.cell_number}
-                </IonLabel>
+                <IonLabel>Número de teléfono : {userInfo?.cellPhone}</IonLabel>
               </IonItem>
 
               <IonItem>
@@ -77,6 +84,7 @@ const SettingsPage: React.FC = () => {
         >
           Logout
         </IonButton>
+        <IonLoading isOpen={loading}></IonLoading>
       </IonContent>
     </IonPage>
   );

@@ -7,11 +7,14 @@ import {
   IonList,
   IonLoading,
   IonPage,
+  IonSelect,
+  IonSelectOption,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
 import { useState } from "react";
 import { authUser } from "../firebase";
+import { firestore } from "../firebase";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
 
@@ -25,24 +28,47 @@ const Register: React.FC = () => {
   const [status, setStatus] = useState({ loading: false, error: false });
   const { auth } = usePaquetes();
   const [email, setEmail] = useState("");
-  const [emailInvalid, setEmailInvalid] = useState(false);
   const [password, setPassword] = useState("");
-  const [passwordInvalid, setPasswordInvalid] = useState(false);
   const [username, setUsername] = useState("");
-  const [edad, setEdad] = useState(null);
-  const [edadInvalid, setEdadInvalid] = useState(false);
+  const [age, setAge] = useState(null);
 
-  const handleRegister = async () => {
+  const [countryCode, setCountryCode] = useState("+569");
+  const [cellPhone, setCellPhone] = useState("");
+  const [name, setName] = useState("");
+
+  const [emailInvalid, setEmailInvalid] = useState(false);
+  const [passwordInvalid, setPasswordInvalid] = useState(false);
+  const [ageInvalid, setAgeInvalid] = useState(false);
+
+  const handleValidation = () => {
+    const emailValidation = validateEmail(email) === null;
+    const passwordValidation = password.length < 6;
+    const ageValidation = age < 18;
+
+    if (!emailValidation && !passwordValidation && !ageValidation) {
+      const fullCellphone = countryCode + cellPhone;
+      handleRegister(fullCellphone);
+    } else {
+      setEmailInvalid(emailValidation);
+      setPasswordInvalid(passwordValidation);
+      setAgeInvalid(ageValidation);
+    }
+  };
+
+  const handleRegister = async (fullCellphone) => {
     try {
       setStatus({ loading: true, error: false });
-      //   setEmailInvalid(validateEmail(email) === null);
-      //   setPasswordInvalid(password.length < 6);
-      // setEdadInvalid(edad < 18);
+      console.log("registrando");
       const credential = await authUser.createUserWithEmailAndPassword(
         email,
         password
       );
-      console.log("credential: ", credential);
+
+      const usersRef = await firestore
+        .collection("users")
+        .doc(credential.user.uid);
+      const userData = { age, cellPhone: fullCellphone, name, username };
+      const userRef = await usersRef.set(userData);
     } catch (error) {
       setStatus({ loading: false, error: true });
       console.log(error);
@@ -83,7 +109,7 @@ const Register: React.FC = () => {
               onIonInput={(e) => setPassword(e.detail.value)}
             ></IonInput>
           </IonItem>
-          {/* <IonItem>
+          <IonItem>
             <IonInput
               type="text"
               label="Nombre de Usuario"
@@ -94,18 +120,48 @@ const Register: React.FC = () => {
           </IonItem>
           <IonItem>
             <IonInput
-              className={edadInvalid ? "ion-invalid ion-touched" : ""}
+              type="text"
+              label="Nombre"
+              labelPlacement="floating"
+              value={name}
+              onIonChange={(e) => setName(e.detail.value)}
+            ></IonInput>
+          </IonItem>
+
+          <IonItem>
+            <IonInput
+              className={ageInvalid ? "ion-invalid ion-touched" : ""}
               type="number"
               label="Edad"
-              value={edad}
-              onIonChange={(e) => setEdad(e.detail.value)}
+              value={age}
+              onIonChange={(e) => setAge(e.detail.value)}
               errorText="Debes ser mayor a 18 años"
               labelPlacement="floating"
             ></IonInput>
-          </IonItem> */}
+          </IonItem>
+          <IonItem>
+            <IonSelect
+              label="Celular"
+              placeholder="Chile +56 (9)"
+              value={countryCode}
+              onIonChange={(e) => setCountryCode(e.detail.value)}
+            >
+              <IonSelectOption value="+569">Chile +56 (9) </IonSelectOption>
+              <IonSelectOption value="+377">Mónaco +377 </IonSelectOption>
+            </IonSelect>
+            <IonInput
+              className="ion-margin-horizontal"
+              placeholder="xxxx-xxxx"
+              value={cellPhone}
+              onIonInput={(e) => {
+                console.log(countryCode + e.detail.value);
+                setCellPhone(e.detail.value);
+              }}
+            ></IonInput>
+          </IonItem>
         </IonList>
 
-        <IonButton onClick={handleRegister} shape="round">
+        <IonButton onClick={handleValidation} shape="round">
           Crear cuenta
         </IonButton>
         <IonButton expand="block" fill="clear" routerLink="/login">

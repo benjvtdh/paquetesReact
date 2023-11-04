@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { authUser } from "../firebase";
+import { authUser, firestore } from "../firebase";
 import { AuthInit } from "../interfaces/paquetesInterface";
 
 export function useAuth(): AuthInit {

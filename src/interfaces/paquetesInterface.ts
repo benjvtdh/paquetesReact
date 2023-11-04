@@ -34,7 +34,6 @@ export interface AuthInit {
 export interface User {
   username: string;
   name: string;
-  last_name: string;
   age: number;
-  cell_number: string;
+  cellPhone: string;
 }
