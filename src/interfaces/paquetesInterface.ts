@@ -9,10 +9,10 @@ export interface RepartidorInterface {
   nombre: string;
 }
 export interface IPaqueteContext {
+  isLoading: boolean;
   auth: Auth;
   paquetesList: PaqueteInterface[];
   repartidoresList: RepartidorInterface[];
-  agregarPaquete: agregarPaq;
 }
 
 export type agregarPaq = (

@@ -21,15 +21,8 @@ import { usePaquetes } from "../hooks/usePaquetes";
 import { firestore } from "../firebase";
 
 const Home: React.FC = () => {
-  const { paquetesList, repartidoresList } = usePaquetes();
+  const { paquetesList, repartidoresList, isLoading } = usePaquetes();
   const [ordenarNoEntregados, setOrdenarNoEntrados] = useState(false);
-  useEffect(() => {
-    async function fetchPaquetes() {
-      const paquetesRef = firestore.collection("paquetes");
-      const snapshot = await paquetesRef.get();
-    }
-    fetchPaquetes();
-  }, []);
 
   const paquetes = ordenarNoEntregados
     ? paquetesList.slice().filter((paq) => !paq.enviado)
