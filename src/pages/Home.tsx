@@ -20,7 +20,7 @@ import { useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
 
 const Home: React.FC = () => {
-  const { paquetesList, repartidoresList } = usePaquetes();
+  const { paquetesList, repartidoresList, isLoading } = usePaquetes();
   const [ordenarNoEntregados, setOrdenarNoEntrados] = useState(false);
 
   const paquetes = ordenarNoEntregados

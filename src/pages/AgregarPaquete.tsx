@@ -16,19 +16,15 @@ import {
 } from "@ionic/react";
 import { useState } from "react";
 
-import { agregarPaq } from "../interfaces/paquetesInterface";
 import { usePaquetes } from "../hooks/usePaquetes";
 
 const AgregarPaquete: React.FC = () => {
-  const [idPaquete, setIdPaquete] = useState("");
   const [contenido, setContenido] = useState("");
   const [idRepartidor, setIdRepartidor] = useState("");
   const { repartidoresList, agregarPaquete } = usePaquetes();
 
   function handleAgregarSetear() {
-    agregarPaquete(Number(idPaquete), contenido, Number(idRepartidor));
-    setIdPaquete("");
-    setContenido("");
+    agregarPaquete(contenido, Number(idRepartidor));
   }
 
   return (
@@ -43,15 +39,6 @@ const AgregarPaquete: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonList>
-          <IonItem>
-            <IonInput
-              type="number"
-              label="ID Paquete"
-              placeholder="Ingrese ID. Sólo numeros"
-              value={idPaquete}
-              onIonChange={(e) => setIdPaquete(e.detail.value)}
-            ></IonInput>
-          </IonItem>
           <IonItem>
             <IonInput
               label="Contenido"
@@ -78,7 +65,7 @@ const AgregarPaquete: React.FC = () => {
             </IonSelect>
           </IonItem>
 
-          <IonRouterLink routerLink="/home">
+          <IonRouterLink routerLink="/">
             <IonButton onClick={() => handleAgregarSetear()} shape="round">
               Agregar Paquete
             </IonButton>
