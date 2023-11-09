@@ -25,6 +25,7 @@ interface RouteParams {
 }
 const RepartidorPage: React.FC = () => {
   const { paquetesList, repartidoresList } = usePaquetes();
+
   const { repartidorId } = useParams<RouteParams>();
   const repartidor = repartidoresList.find(
     (repartidor) => repartidor.repartidorId === Number(repartidorId)

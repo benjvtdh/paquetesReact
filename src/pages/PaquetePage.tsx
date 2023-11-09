@@ -34,8 +34,9 @@ interface RouteParams {
 
 const PaquetePage: React.FC = () => {
   const { paquetesList, repartidoresList } = usePaquetes();
+
   const { id } = useParams<RouteParams>();
-  const paquete = paquetesList.find((paq) => paq.id === Number(id));
+  const paquete = paquetesList.find((paq) => paq.id === id);
   const repartidor = repartidoresList.find(
     (repartidor) => repartidor.repartidorId === paquete.repartidorId
   );

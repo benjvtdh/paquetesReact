@@ -16,9 +16,8 @@ import "./Home.css";
 import Paquete from "../components/Paquete";
 import Repartidor from "../components/Repartidor";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
-import { firestore } from "../firebase";
 
 const Home: React.FC = () => {
   const { paquetesList, repartidoresList, isLoading } = usePaquetes();

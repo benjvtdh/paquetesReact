@@ -1,5 +1,5 @@
 export interface PaqueteInterface {
-  id: number;
+  id: string;
   objeto: string;
   enviado: boolean;
   repartidorId: number;
@@ -9,17 +9,15 @@ export interface RepartidorInterface {
   nombre: string;
 }
 export interface IPaqueteContext {
+  error: string;
   isLoading: boolean;
   auth: Auth;
   paquetesList: PaqueteInterface[];
   repartidoresList: RepartidorInterface[];
+  agregarPaquete: agregarPaq;
 }
 
-export type agregarPaq = (
-  idPaquete: number,
-  objetoPaquete: string,
-  idRepartidor: number
-) => void;
+export type agregarPaq = (objetoPaquete: string, idRepartidor: number) => void;
 
 export interface Auth {
   loggedIn: boolean;

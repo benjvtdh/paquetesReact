@@ -9,7 +9,7 @@ import {
 import "../components/Paquete.css";
 interface Props {
   paquete: {
-    id: number;
+    id: string;
     objeto: string;
     enviado: boolean;
   };

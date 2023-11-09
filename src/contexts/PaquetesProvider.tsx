@@ -3,21 +3,21 @@ import {
   Auth,
   PaqueteInterface,
   RepartidorInterface,
-  agregarPaq,
 } from "../interfaces/paquetesInterface";
 import { PaquetesContext } from "./PaquetesContext";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useReducer } from "react";
+import { agregarPaq } from "../interfaces/paquetesInterface";
 
-const paquetes: PaqueteInterface[] = [
-  { id: 1, objeto: "Ps5 100GB", enviado: false, repartidorId: 2 },
-  { id: 2, objeto: "Narnia", enviado: true, repartidorId: 2 },
-  { id: 3, objeto: "Iphone X", enviado: true, repartidorId: 4 },
-];
+// const paquetes: PaqueteInterface[] = [
+//   { id: 1, objeto: "Ps5 100GB", enviado: false, repartidorId: 2 },
+//   { id: 2, objeto: "Narnia", enviado: true, repartidorId: 2 },
+//   { id: 3, objeto: "Iphone X", enviado: true, repartidorId: 4 },
+// ];
 
-const repartidores: RepartidorInterface[] = [
-  { repartidorId: 2, nombre: "Benjamin Cortes" },
-  { repartidorId: 4, nombre: "Anibaldo Villegas" },
-];
+// const repartidores: RepartidorInterface[] = [
+//   { repartidorId: 2, nombre: "Benjamin Cortes" },
+//   { repartidorId: 4, nombre: "Anibaldo Villegas" },
+// ];
 
 const initialState = {
   auth: null,
@@ -33,6 +33,8 @@ function reducer(state, action) {
       return { ...state, loading: true };
     case "paquetes/loaded":
       return { ...state, isLoading: false, paquetesList: action.payload };
+    case "repartidores/loaded":
+      return { ...state, isLoading: false, repartidoresList: action.payload };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
     default:
@@ -60,7 +62,12 @@ export const PaquetesProvider = ({ children, auth }: props) => {
         snapshot.forEach((doc) => {
           const { enviado, objeto, repartidorId } = doc.data();
           const id = doc.id;
-          paquetesApi.push({ id, enviado, objeto, repartidorId });
+          paquetesApi.push({
+            id,
+            enviado,
+            objeto,
+            repartidorId,
+          } as PaqueteInterface);
         });
         dispatch({ type: "paquetes/loaded", payload: paquetesApi });
       } catch (error) {
@@ -73,27 +80,56 @@ export const PaquetesProvider = ({ children, auth }: props) => {
     fetchPaquetes();
   }, []);
 
+  useEffect(() => {
+    async function fetchRepartidores() {
+      dispatch({ type: "loading" });
+      try {
+        const repartidoresRef = firestore.collection("repartidores");
+        const snapshot = await repartidoresRef.get();
+        const repartidoresApi = [];
+        snapshot.forEach((doc) => {
+          const { nombre } = doc.data();
+          const repartidorId = Number(doc.id);
+          repartidoresApi.push({
+            repartidorId,
+            nombre,
+          } as RepartidorInterface);
+        });
+
+        dispatch({ type: "repartidores/loaded", payload: repartidoresApi });
+      } catch (error) {
+        dispatch({
+          type: "rejected",
+          payload: "There was an error loading paquetes...",
+        });
+      }
+    }
+    fetchRepartidores();
+  }, []);
+
   // Function for add a Paquete
-  const agregarPaquete: agregarPaq = function (
-    idPaquete,
-    objetoPaquete,
-    idRepartidor
-  ) {
-    const nuevoPaqObj = {
-      id: Number(idPaquete),
-      objeto: objetoPaquete,
-      enviado: false,
-      repartidorId: idRepartidor,
-    };
-    // setPaquetesList((paquetes) => [...paquetes, nuevoPaqObj]);
+  const agregarPaquete: agregarPaq = async function (objeto, repartidorId) {
+    dispatch({ type: "loading" });
+    try {
+      const res = await firestore
+        .collection("paquetes")
+        .add({ objeto, enviado: false, repartidorId });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error loading paquetes...",
+      });
+    }
   };
 
   return (
     <PaquetesContext.Provider
       value={{
+        error,
         isLoading,
         paquetesList,
         repartidoresList,
+        agregarPaquete,
         auth,
       }}
     >
