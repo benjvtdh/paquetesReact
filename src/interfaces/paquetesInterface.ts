@@ -11,7 +11,7 @@ export interface RepartidorInterface {
 export interface IPaqueteContext {
   error: string;
   isLoading: boolean;
-  auth: Auth;
+
   paquetesList: PaqueteInterface[];
   repartidoresList: RepartidorInterface[];
   agregarPaquete: agregarPaq;
@@ -19,19 +19,19 @@ export interface IPaqueteContext {
 
 export type agregarPaq = (objetoPaquete: string, idRepartidor: number) => void;
 
-export interface Auth {
-  loggedIn: boolean;
-  userId?: string;
-}
+// export interface Auth {
+//   loggedIn: boolean;
+//   userId?: string;
+// }
 
-export interface AuthInit {
-  loading: boolean;
-  auth?: Auth;
-}
+// export interface AuthInit {
+//   loading: boolean;
+//   auth?: Auth;
+// }
 
-export interface User {
-  username: string;
-  name: string;
-  age: number;
-  cellPhone: string;
-}
+// export interface User {
+//   username: string;
+//   name: string;
+//   age: number;
+//   cellPhone: string;
+// }

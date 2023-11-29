@@ -1,23 +1,11 @@
 import { firestore } from "../firebase";
 import {
-  Auth,
   PaqueteInterface,
   RepartidorInterface,
 } from "../interfaces/paquetesInterface";
 import { PaquetesContext } from "./PaquetesContext";
 import { useEffect, useReducer } from "react";
 import { agregarPaq } from "../interfaces/paquetesInterface";
-
-// const paquetes: PaqueteInterface[] = [
-//   { id: 1, objeto: "Ps5 100GB", enviado: false, repartidorId: 2 },
-//   { id: 2, objeto: "Narnia", enviado: true, repartidorId: 2 },
-//   { id: 3, objeto: "Iphone X", enviado: true, repartidorId: 4 },
-// ];
-
-// const repartidores: RepartidorInterface[] = [
-//   { repartidorId: 2, nombre: "Benjamin Cortes" },
-//   { repartidorId: 4, nombre: "Anibaldo Villegas" },
-// ];
 
 const initialState = {
   auth: null,
@@ -42,13 +30,8 @@ function reducer(state, action) {
   }
 }
 
-interface props {
-  children: JSX.Element | JSX.Element[];
-  auth: Auth;
-}
-
 // Provider for PaquetesContext
-export const PaquetesProvider = ({ children, auth }: props) => {
+export const PaquetesProvider = ({ children }) => {
   const [{ isLoading, paquetesList, repartidoresList, error }, dispatch] =
     useReducer(reducer, initialState);
 
@@ -130,7 +113,6 @@ export const PaquetesProvider = ({ children, auth }: props) => {
         paquetesList,
         repartidoresList,
         agregarPaquete,
-        auth,
       }}
     >
       {children}

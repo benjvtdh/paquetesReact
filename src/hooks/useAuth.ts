@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { authUser, firestore } from "../firebase";
-import { AuthInit } from "../interfaces/paquetesInterface";
+import { authUser } from "../firebase";
+import { AuthInit } from "../interfaces/authInterface";
 
 export function useAuth(): AuthInit {
   const [authState, setAuthState] = useState<AuthInit>({

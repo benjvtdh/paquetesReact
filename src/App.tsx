@@ -11,38 +11,52 @@ import AppTabs from "./components/AppTabs";
 import Login from "./pages/Login";
 import NotFoundPage from "./pages/NotFoundPage";
 import Register from "./pages/RegisterPage";
-import { useAuth } from "./hooks/useAuth";
+
+import { UsersProvider } from "./contexts/UsersProvider";
+import { useUser } from "./hooks/useUser";
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const { loading, auth } = useAuth();
+  const { isLoading } = useUser();
 
-  if (loading) {
+  if (isLoading) {
     return <IonLoading isOpen />;
   }
 
   return (
     <IonApp>
-      <PaquetesProvider auth={auth}>
-        <IonReactRouter>
-          <Switch>
-            <Route exact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/register">
-              <Register />
-            </Route>
-            <Route path="/user">
-              <AppTabs />
-            </Route>
-            <Redirect exact path="/" to="/user/home" />
-            <Route>
-              <NotFoundPage />
-            </Route>
-          </Switch>
-        </IonReactRouter>
-      </PaquetesProvider>
+      <UsersProvider>
+        <PaquetesProvider>
+          <IonReactRouter>
+            <Switch>
+              <Route
+                exact
+                path="/login"
+              >
+                <Login />
+              </Route>
+              <Route
+                exact
+                path="/register"
+              >
+                <Register />
+              </Route>
+              <Route path="/user">
+                <AppTabs />
+              </Route>
+              <Redirect
+                exact
+                path="/"
+                to="/user/home"
+              />
+              <Route>
+                <NotFoundPage />
+              </Route>
+            </Switch>
+          </IonReactRouter>
+        </PaquetesProvider>
+      </UsersProvider>
     </IonApp>
   );
 };

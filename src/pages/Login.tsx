@@ -15,25 +15,21 @@ import { useState } from "react";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
 
+import { useAuth } from "../hooks/useAuth";
+import { useUser } from "../hooks/useUser";
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { auth } = usePaquetes();
-  const [status, setStatus] = useState({ loading: false, error: false });
 
-  const handleLogin = async () => {
-    try {
-      setStatus({ loading: true, error: false });
-      const credential = await authUser.signInWithEmailAndPassword(
-        email,
-        password
-      );
-    } catch (error) {
-      setStatus({ loading: false, error: true });
-    }
-  };
+  const { isLoading, error, login, fetchUser } = useUser();
+  const authState = useAuth();
 
-  if (auth.loggedIn) {
+  async function handleLogin() {
+    await login(email, password);
+  }
+
+  if (authState.loggedIn) {
     return <Redirect to="/user/home" />;
   }
 
@@ -66,18 +62,25 @@ const Login: React.FC = () => {
               value={password}
               onIonInput={(event) => setPassword(event.detail.value)}
               errorText="Contraseña o correo incorrecto"
-              className={status.error ? "ion-invalid ion-touched" : ""}
+              className={error ? "ion-invalid ion-touched" : ""}
             ></IonInput>
           </IonItem>
         </IonList>
 
-        <IonButton onClick={handleLogin} shape="round">
+        <IonButton
+          onClick={handleLogin}
+          shape="round"
+        >
           Ingresar
         </IonButton>
-        <IonButton expand="block" fill="clear" routerLink="/register">
+        <IonButton
+          expand="block"
+          fill="clear"
+          routerLink="/register"
+        >
           ¿No tienes una cuenta?
         </IonButton>
-        <IonLoading isOpen={status.loading}></IonLoading>
+        <IonLoading isOpen={isLoading}></IonLoading>
       </IonContent>
     </IonPage>
   );
