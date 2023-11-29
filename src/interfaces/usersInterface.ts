@@ -1,5 +1,3 @@
-import { Auth } from "./authInterface";
-
 export interface User {
   username: string;
   name: string;
@@ -13,10 +11,10 @@ export interface IUserContext {
   error: string;
   login: loginFn;
   logout: logoutFn;
-  auth: Auth;
+  loggedIn: boolean;
   fetchUser: fetchUserFn;
 }
 
-export type loginFn = (email: string, password: string) => void;
+export type loginFn = (email: string, password: string) => Promise<string>;
 export type logoutFn = () => void;
 export type fetchUserFn = (userId) => void;

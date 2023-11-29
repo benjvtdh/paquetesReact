@@ -13,49 +13,73 @@ import AgregarPaquete from "../pages/AgregarPaquete";
 import RepartidorPage from "../pages/RepartidorPage";
 import { addCircle, home, settings } from "ionicons/icons";
 import SettingsPage from "../pages/SettingsPage";
-import { usePaquetes } from "../hooks/usePaquetes";
+import { useUser } from "../hooks/useUser";
 
 // Protected Pages
 const AppTabs: React.FC = () => {
-  const { auth } = usePaquetes();
+  const { loggedIn } = useUser();
 
   // If user is not logged, is redirected to Login
-  if (!auth.loggedIn) {
+  if (!loggedIn) {
     return <Redirect to="/login" />;
   }
   return (
     <IonTabs>
       <IonRouterOutlet>
-        <Route exact path="/user/home">
+        <Route
+          exact
+          path="/user/home"
+        >
           <Home />
         </Route>
 
-        <Route exact path="/user/paquete/:id">
+        <Route
+          exact
+          path="/user/paquete/:id"
+        >
           <PaquetePage />
         </Route>
-        <Route exact path="/user/agregar-paquete">
+        <Route
+          exact
+          path="/user/agregar-paquete"
+        >
           <AgregarPaquete />
         </Route>
-        <Route exact path="/user/repartidor/:repartidorId">
+        <Route
+          exact
+          path="/user/repartidor/:repartidorId"
+        >
           <RepartidorPage />
         </Route>
-        <Route exact path="/user/settings">
+        <Route
+          exact
+          path="/user/settings"
+        >
           <SettingsPage />
         </Route>
       </IonRouterOutlet>
 
       <IonTabBar slot="bottom">
-        <IonTabButton tab="home" href="/user/home">
+        <IonTabButton
+          tab="home"
+          href="/user/home"
+        >
           <IonIcon icon={home} />
           <IonLabel>Home</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="agregar-paquete" href="/user/agregar-paquete">
+        <IonTabButton
+          tab="agregar-paquete"
+          href="/user/agregar-paquete"
+        >
           <IonIcon icon={addCircle} />
           <IonLabel>Agregar paquete</IonLabel>
         </IonTabButton>
 
-        <IonTabButton tab="settings" href="/user/settings">
+        <IonTabButton
+          tab="settings"
+          href="/user/settings"
+        >
           <IonIcon icon={settings} />
           <IonLabel>Configuración</IonLabel>
         </IonTabButton>

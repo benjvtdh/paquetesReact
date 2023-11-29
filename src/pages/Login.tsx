@@ -10,26 +10,34 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { authUser } from "../firebase";
-import { useState } from "react";
-import { usePaquetes } from "../hooks/usePaquetes";
+import { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 
-import { useAuth } from "../hooks/useAuth";
 import { useUser } from "../hooks/useUser";
+import { useAuth } from "../hooks/useAuth";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { isLoading, error, login, fetchUser, loggedIn } = useUser();
 
-  const { isLoading, error, login, fetchUser } = useUser();
-  const authState = useAuth();
+  const authInit = useAuth();
+
+  useEffect(() => {
+    console.log("aki mount");
+    console.log(authInit);
+    if (authInit.auth) {
+      console.log("akipo");
+      fetchUser(authInit.auth.userId);
+    }
+  }, []);
 
   async function handleLogin() {
-    await login(email, password);
+    const userId = await login(email, password);
+    await fetchUser(userId);
   }
 
-  if (authState.loggedIn) {
+  if (loggedIn) {
     return <Redirect to="/user/home" />;
   }
 

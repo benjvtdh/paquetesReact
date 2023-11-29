@@ -14,16 +14,12 @@ import Register from "./pages/RegisterPage";
 
 import { UsersProvider } from "./contexts/UsersProvider";
 import { useUser } from "./hooks/useUser";
+import { useEffect } from "react";
+import { useAuth } from "./hooks/useAuth";
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const { isLoading } = useUser();
-
-  if (isLoading) {
-    return <IonLoading isOpen />;
-  }
-
   return (
     <IonApp>
       <UsersProvider>

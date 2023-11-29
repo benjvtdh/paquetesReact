@@ -9,10 +9,10 @@ import {
 import { authUser, firestore } from "../firebase";
 
 const initialState = {
-  isLoading: false,
   user: null,
   error: "",
-  auth: null,
+  loggedIn: false,
+  isLoading: false,
 };
 
 function reducer(state, action) {
@@ -21,15 +21,14 @@ function reducer(state, action) {
       return { ...state, isLoading: true };
 
     case "user/loaded":
-      return { ...state, user: action.payload };
+      return { ...state, user: action.payload, loggedIn: true };
     case "login":
       return {
         ...state,
         isLoading: false,
-        loggedIn: true,
       };
     case "logout":
-      return { ...state, isLoading: false, loggedIn: false, user: null };
+      return { ...state, isLoading: false, user: null, loggedIn: false };
 
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
@@ -38,13 +37,8 @@ function reducer(state, action) {
   }
 }
 
-interface props {
-  children:
-}
-
-
-export const UsersProvider = ({ children, auth }: props) => {
-  const [{ isLoading, user, error }, dispatch] = useReducer(
+export const UsersProvider = ({ children }) => {
+  const [{ isLoading, loggedIn, user, error }, dispatch] = useReducer(
     reducer,
     initialState
   );
@@ -56,16 +50,21 @@ export const UsersProvider = ({ children, auth }: props) => {
         email,
         password
       );
-
       dispatch({ type: "login" });
+
+      return credential.user.uid;
     } catch (error) {
       dispatch({ type: "error", payload: error.message });
+      return null;
     }
   };
 
   const logout: logoutFn = async function () {
-    await authUser.signOut();
-    dispatch({ type: "logout" });
+    dispatch({ type: "loading" });
+    try {
+      await authUser.signOut();
+      dispatch({ type: "logout" });
+    } catch (error) {}
   };
 
   const fetchUser: fetchUserFn = async function (userId) {
@@ -73,13 +72,14 @@ export const UsersProvider = ({ children, auth }: props) => {
       const usersRef = firestore.collection("users").doc(userId);
       const res = await usersRef.get();
       const data = await res.data();
+      console.log(data);
       dispatch({ type: "user/loaded", payload: data as User });
     } catch (error) {}
   };
 
   return (
     <UsersContext.Provider
-      value={{ isLoading, user, error, login, logout, fetchUser, auth }}
+      value={{ loggedIn, isLoading, user, error, login, logout, fetchUser }}
     >
       {children}
     </UsersContext.Provider>
