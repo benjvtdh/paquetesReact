@@ -40,15 +40,24 @@ function reducer(state, action) {
 interface props {
   children: JSX.Element | JSX.Element[];
   loggedIn: boolean;
+  userId: string;
 }
 
-export const UsersProvider = ({ children, loggedIn }: props) => {
+export const UsersProvider = ({ children, loggedIn, userId }: props) => {
   const [{ isLoading, user, error }, dispatch] = useReducer(
     reducer,
     initialState
   );
 
-  const authInit = useAuth();
+  useEffect(() => {
+    async function fetchInit() {
+      if (loggedIn && userId) {
+        console.log(userId);
+        await fetchUser(userId);
+      }
+    }
+    fetchInit();
+  }, [loggedIn, userId]);
 
   const login: loginFn = async function (email, password) {
     dispatch({ type: "loading" });
@@ -86,7 +95,16 @@ export const UsersProvider = ({ children, loggedIn }: props) => {
 
   return (
     <UsersContext.Provider
-      value={{ loggedIn, isLoading, user, error, login, logout, fetchUser }}
+      value={{
+        loggedIn,
+        isLoading,
+        user,
+        error,
+        login,
+        logout,
+        fetchUser,
+        userId,
+      }}
     >
       {children}
     </UsersContext.Provider>

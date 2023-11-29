@@ -23,9 +23,9 @@ const AgregarPaquete: React.FC = () => {
   const [idRepartidor, setIdRepartidor] = useState("");
   const { repartidoresList, agregarPaquete } = usePaquetes();
 
-  function handleAgregarSetear() {
-    agregarPaquete(contenido, Number(idRepartidor));
-  }
+  const handleAgregarSetear = async () => {
+    await agregarPaquete(contenido, Number(idRepartidor));
+  };
 
   return (
     <IonPage>
@@ -44,7 +44,9 @@ const AgregarPaquete: React.FC = () => {
               label="Contenido"
               placeholder="Ingrese contenido"
               value={contenido}
-              onIonChange={(e) => setContenido(e.detail.value)}
+              onIonInput={(e) => {
+                setContenido(e.detail.value);
+              }}
             ></IonInput>
           </IonItem>
           <IonItem>
@@ -66,7 +68,10 @@ const AgregarPaquete: React.FC = () => {
           </IonItem>
 
           <IonRouterLink routerLink="/">
-            <IonButton onClick={() => handleAgregarSetear()} shape="round">
+            <IonButton
+              onClick={() => handleAgregarSetear()}
+              shape="round"
+            >
               Agregar Paquete
             </IonButton>
           </IonRouterLink>

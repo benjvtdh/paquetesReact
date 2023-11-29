@@ -1,11 +1,12 @@
 import { firestore } from "../firebase";
+import { PaquetesContext } from "./PaquetesContext";
+import { useEffect, useReducer } from "react";
 import {
   PaqueteInterface,
   RepartidorInterface,
+  agregarPaq,
+  deletePaq,
 } from "../interfaces/paquetesInterface";
-import { PaquetesContext } from "./PaquetesContext";
-import { useEffect, useReducer } from "react";
-import { agregarPaq } from "../interfaces/paquetesInterface";
 
 const initialState = {
   auth: null,
@@ -21,6 +22,22 @@ function reducer(state, action) {
       return { ...state, loading: true };
     case "paquetes/loaded":
       return { ...state, isLoading: false, paquetesList: action.payload };
+
+    case "paquete/add": {
+      return {
+        ...state,
+        isLoading: false,
+        paquetesList: [...state.paquetesList, action.payload],
+      };
+    }
+    case "paquete/delete":
+      return {
+        ...state,
+        isLoading: false,
+        paquetesList: state.paquetesList.filter(
+          (paq) => paq.id !== action.payload
+        ),
+      };
     case "repartidores/loaded":
       return { ...state, isLoading: false, repartidoresList: action.payload };
     case "rejected":
@@ -52,6 +69,8 @@ export const PaquetesProvider = ({ children }) => {
             repartidorId,
           } as PaqueteInterface);
         });
+
+        console.log(paquetesApi);
         dispatch({ type: "paquetes/loaded", payload: paquetesApi });
       } catch (error) {
         dispatch({
@@ -94,15 +113,21 @@ export const PaquetesProvider = ({ children }) => {
   const agregarPaquete: agregarPaq = async function (objeto, repartidorId) {
     dispatch({ type: "loading" });
     try {
-      const res = await firestore
-        .collection("paquetes")
-        .add({ objeto, enviado: false, repartidorId });
+      const paquete = { objeto, enviado: false, repartidorId };
+      const res = await firestore.collection("paquetes").add(paquete);
+      dispatch({ type: "paquete/add", payload: paquete });
     } catch (error) {
       dispatch({
         type: "rejected",
         payload: "There was an error loading paquetes...",
       });
     }
+  };
+  const deletePaquete: deletePaq = async function (objetoId) {
+    dispatch({ type: "loading" });
+    const paquetesRef = firestore.collection("paquetes").doc(objetoId);
+    await paquetesRef.delete();
+    dispatch({ type: "paquete/add", payload: objetoId });
   };
 
   return (
@@ -113,6 +138,7 @@ export const PaquetesProvider = ({ children }) => {
         paquetesList,
         repartidoresList,
         agregarPaquete,
+        deletePaquete,
       }}
     >
       {children}

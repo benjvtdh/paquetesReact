@@ -28,7 +28,10 @@ const App: React.FC = () => {
 
   return (
     <IonApp>
-      <UsersProvider loggedIn={authInit.loggedIn}>
+      <UsersProvider
+        loggedIn={authInit.loggedIn}
+        userId={authInit.userId}
+      >
         <PaquetesProvider>
           <IonReactRouter>
             <Switch>

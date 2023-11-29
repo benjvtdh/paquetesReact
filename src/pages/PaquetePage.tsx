@@ -1,5 +1,6 @@
 import {
   IonBackButton,
+  IonButton,
   IonButtons,
   IonCard,
   IonCardContent,
@@ -13,6 +14,8 @@ import {
   IonLabel,
   IonList,
   IonPage,
+  IonRouterLink,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -33,13 +36,17 @@ interface RouteParams {
 }
 
 const PaquetePage: React.FC = () => {
-  const { paquetesList, repartidoresList } = usePaquetes();
+  const { paquetesList, repartidoresList, deletePaquete } = usePaquetes();
 
   const { id } = useParams<RouteParams>();
   const paquete = paquetesList.find((paq) => paq.id === id);
   const repartidor = repartidoresList.find(
     (repartidor) => repartidor.repartidorId === paquete.repartidorId
   );
+
+  const handleBorrar = async () => {
+    await deletePaquete(paquete.id);
+  };
 
   return (
     <IonPage>
@@ -60,12 +67,18 @@ const PaquetePage: React.FC = () => {
           <IonCardContent>
             <IonList>
               <IonItem>
-                <IonIcon slot="start" icon={person}></IonIcon>
+                <IonIcon
+                  slot="start"
+                  icon={person}
+                ></IonIcon>
                 <IonLabel>Repartidor: {repartidor.nombre} </IonLabel>
               </IonItem>
 
               <IonItem>
-                <IonIcon slot="start" icon={airplane}></IonIcon>
+                <IonIcon
+                  slot="start"
+                  icon={airplane}
+                ></IonIcon>
                 <IonLabel>
                   Estado :
                   <IonIcon
@@ -76,11 +89,24 @@ const PaquetePage: React.FC = () => {
               </IonItem>
 
               <IonItem>
-                <IonIcon slot="start" icon={calendarNumber}></IonIcon>
+                <IonIcon
+                  slot="start"
+                  icon={calendarNumber}
+                ></IonIcon>
                 <IonLabel>Fecha de entrega: </IonLabel>
               </IonItem>
             </IonList>
           </IonCardContent>
+          <IonRow className="ion-justify-content-center">
+            <IonRouterLink routerLink="/">
+              <IonButton
+                onClick={handleBorrar}
+                color="danger"
+              >
+                Borrar paquete
+              </IonButton>
+            </IonRouterLink>
+          </IonRow>
         </IonCard>
       </IonContent>
     </IonPage>

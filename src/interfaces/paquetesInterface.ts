@@ -11,10 +11,11 @@ export interface RepartidorInterface {
 export interface IPaqueteContext {
   error: string;
   isLoading: boolean;
-
   paquetesList: PaqueteInterface[];
   repartidoresList: RepartidorInterface[];
   agregarPaquete: agregarPaq;
+  deletePaquete: deletePaq;
 }
 
 export type agregarPaq = (objetoPaquete: string, idRepartidor: number) => void;
+export type deletePaq = (objetoId: string) => void;

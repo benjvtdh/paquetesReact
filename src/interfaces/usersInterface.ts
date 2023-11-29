@@ -8,6 +8,7 @@ export interface User {
 export interface IUserContext {
   isLoading: boolean;
   user: User;
+  userId: string;
   error: string;
   login: loginFn;
   logout: logoutFn;

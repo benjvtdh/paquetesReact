@@ -19,6 +19,7 @@ import {
 
 import { callOutline, person } from "ionicons/icons";
 import { useUser } from "../hooks/useUser";
+import { useEffect } from "react";
 
 const SettingsPage: React.FC = () => {
   const { user, isLoading, logout } = useUser();
