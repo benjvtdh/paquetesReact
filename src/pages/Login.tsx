@@ -21,12 +21,6 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState("");
   const { isLoading, error, login, fetchUser, loggedIn } = useUser();
 
-  const authInit = useAuth();
-
-  if (authInit.loggedIn && authInit.userId) {
-    fetchUser(authInit.userId);
-  }
-
   async function handleLogin() {
     const userId = await login(email, password);
     await fetchUser(userId);

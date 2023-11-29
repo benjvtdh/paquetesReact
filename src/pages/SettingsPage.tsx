@@ -22,6 +22,7 @@ import { useUser } from "../hooks/useUser";
 
 const SettingsPage: React.FC = () => {
   const { user, isLoading, logout } = useUser();
+
   return (
     <IonPage>
       <IonHeader>

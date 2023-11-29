@@ -22,6 +22,10 @@ setupIonicReact();
 const App: React.FC = () => {
   const authInit = useAuth();
 
+  if (authInit.loading) {
+    return <IonLoading isOpen />;
+  }
+
   return (
     <IonApp>
       <UsersProvider loggedIn={authInit.loggedIn}>

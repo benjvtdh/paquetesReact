@@ -7,6 +7,7 @@ import {
   logoutFn,
 } from "../interfaces/usersInterface";
 import { authUser, firestore } from "../firebase";
+import { useAuth } from "../hooks/useAuth";
 
 const initialState = {
   user: null,
@@ -47,6 +48,8 @@ export const UsersProvider = ({ children, loggedIn }: props) => {
     initialState
   );
 
+  const authInit = useAuth();
+
   const login: loginFn = async function (email, password) {
     dispatch({ type: "loading" });
     try {
@@ -76,7 +79,7 @@ export const UsersProvider = ({ children, loggedIn }: props) => {
       const usersRef = firestore.collection("users").doc(userId);
       const res = await usersRef.get();
       const data = await res.data();
-      console.log(data);
+
       dispatch({ type: "user/loaded", payload: data as User });
     } catch (error) {}
   };

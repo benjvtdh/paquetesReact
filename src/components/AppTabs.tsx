@@ -14,6 +14,8 @@ import RepartidorPage from "../pages/RepartidorPage";
 import { addCircle, home, settings } from "ionicons/icons";
 import SettingsPage from "../pages/SettingsPage";
 import { useUser } from "../hooks/useUser";
+import { useAuth } from "../hooks/useAuth";
+import { useEffect } from "react";
 
 // Protected Pages
 const AppTabs: React.FC = () => {
@@ -23,6 +25,7 @@ const AppTabs: React.FC = () => {
   if (!loggedIn) {
     return <Redirect to="/login" />;
   }
+
   return (
     <IonTabs>
       <IonRouterOutlet>
