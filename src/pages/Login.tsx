@@ -23,14 +23,9 @@ const Login: React.FC = () => {
 
   const authInit = useAuth();
 
-  useEffect(() => {
-    console.log("aki mount");
-    console.log(authInit);
-    if (authInit.auth) {
-      console.log("akipo");
-      fetchUser(authInit.auth.userId);
-    }
-  }, []);
+  if (authInit.loggedIn && authInit.userId) {
+    fetchUser(authInit.userId);
+  }
 
   async function handleLogin() {
     const userId = await login(email, password);

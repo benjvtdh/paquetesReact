@@ -11,7 +11,6 @@ import { authUser, firestore } from "../firebase";
 const initialState = {
   user: null,
   error: "",
-  loggedIn: false,
   isLoading: false,
 };
 
@@ -37,8 +36,13 @@ function reducer(state, action) {
   }
 }
 
-export const UsersProvider = ({ children }) => {
-  const [{ isLoading, loggedIn, user, error }, dispatch] = useReducer(
+interface props {
+  children: JSX.Element | JSX.Element[];
+  loggedIn: boolean;
+}
+
+export const UsersProvider = ({ children, loggedIn }: props) => {
+  const [{ isLoading, user, error }, dispatch] = useReducer(
     reducer,
     initialState
   );

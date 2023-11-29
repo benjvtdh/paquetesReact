@@ -20,9 +20,11 @@ import { useAuth } from "./hooks/useAuth";
 setupIonicReact();
 
 const App: React.FC = () => {
+  const authInit = useAuth();
+
   return (
     <IonApp>
-      <UsersProvider>
+      <UsersProvider loggedIn={authInit.loggedIn}>
         <PaquetesProvider>
           <IonReactRouter>
             <Switch>
