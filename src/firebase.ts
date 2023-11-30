@@ -3,15 +3,13 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyACFpn5bRxPi3glDLi66MpeRbLa__H1tdc",
-  authDomain: "paquetesreact-24ac2.firebaseapp.com",
-  projectId: "paquetesreact-24ac2",
-  storageBucket: "paquetesreact-24ac2.appspot.com",
-  messagingSenderId: "780579617571",
-  appId: "1:780579617571:web:30bb1c10a330d769e7ea96",
-  measurementId: "G-6633R15TSK",
+  apiKey: "AIzaSyCxqgeI-GG4GvXT_2pSpejO5QOxzeeMZik",
+  authDomain: "paquetesreact-51930.firebaseapp.com",
+  projectId: "paquetesreact-51930",
+  storageBucket: "paquetesreact-51930.appspot.com",
+  messagingSenderId: "888393088538",
+  appId: "1:888393088538:web:8be24261e9ac492c905ba3",
 };
-
 const app = firebase.initializeApp(firebaseConfig);
 export const authUser = app.auth();
 export const firestore = app.firestore();

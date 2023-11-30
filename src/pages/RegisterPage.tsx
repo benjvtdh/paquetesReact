@@ -17,6 +17,7 @@ import { authUser } from "../firebase";
 import { firestore } from "../firebase";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
+import { useUser } from "../hooks/useUser";
 
 const validateEmail = (email: string) => {
   return email.match(
@@ -26,7 +27,7 @@ const validateEmail = (email: string) => {
 
 const Register: React.FC = () => {
   const [status, setStatus] = useState({ loading: false, error: false });
-  const { auth } = usePaquetes();
+  const { loggedIn } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
@@ -58,7 +59,7 @@ const Register: React.FC = () => {
   const handleRegister = async (fullCellphone) => {
     try {
       setStatus({ loading: true, error: false });
-      console.log("registrando");
+
       const credential = await authUser.createUserWithEmailAndPassword(
         email,
         password
@@ -71,10 +72,9 @@ const Register: React.FC = () => {
       const userRef = await usersRef.set(userData);
     } catch (error) {
       setStatus({ loading: false, error: true });
-      console.log(error);
     }
   };
-  if (auth.loggedIn) {
+  if (loggedIn) {
     return <Redirect to="/user/home" />;
   }
 
@@ -160,10 +160,17 @@ const Register: React.FC = () => {
           </IonItem>
         </IonList>
 
-        <IonButton onClick={handleValidation} shape="round">
+        <IonButton
+          onClick={handleValidation}
+          shape="round"
+        >
           Crear cuenta
         </IonButton>
-        <IonButton expand="block" fill="clear" routerLink="/login">
+        <IonButton
+          expand="block"
+          fill="clear"
+          routerLink="/login"
+        >
           ¿Ya tienes una cuenta?
         </IonButton>
         <IonLoading isOpen={status.loading}></IonLoading>

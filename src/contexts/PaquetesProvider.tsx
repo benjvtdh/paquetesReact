@@ -70,7 +70,6 @@ export const PaquetesProvider = ({ children }) => {
           } as PaqueteInterface);
         });
 
-        console.log(paquetesApi);
         dispatch({ type: "paquetes/loaded", payload: paquetesApi });
       } catch (error) {
         dispatch({
@@ -80,7 +79,7 @@ export const PaquetesProvider = ({ children }) => {
       }
     }
     fetchPaquetes();
-  }, []);
+  }, [paquetesList]);
 
   useEffect(() => {
     async function fetchRepartidores() {
@@ -90,8 +89,10 @@ export const PaquetesProvider = ({ children }) => {
         const snapshot = await repartidoresRef.get();
         const repartidoresApi = [];
         snapshot.forEach((doc) => {
+          console.log(doc.id);
           const { nombre } = doc.data();
           const repartidorId = Number(doc.id);
+
           repartidoresApi.push({
             repartidorId,
             nombre,
@@ -127,7 +128,7 @@ export const PaquetesProvider = ({ children }) => {
     dispatch({ type: "loading" });
     const paquetesRef = firestore.collection("paquetes").doc(objetoId);
     await paquetesRef.delete();
-    dispatch({ type: "paquete/add", payload: objetoId });
+    dispatch({ type: "paquete/delete", payload: objetoId });
   };
 
   return (
