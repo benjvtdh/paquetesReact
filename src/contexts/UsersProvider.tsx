@@ -7,7 +7,7 @@ import {
   logoutFn,
 } from "../interfaces/usersInterface";
 import { authUser, firestore } from "../firebase";
-import { useAuth } from "../hooks/useAuth";
+import { cloudOffline } from "ionicons/icons";
 
 const initialState = {
   user: null,
@@ -66,11 +66,12 @@ export const UsersProvider = ({ children, loggedIn, userId }: props) => {
         email,
         password
       );
+
       dispatch({ type: "login" });
 
       return credential.user.uid;
     } catch (error) {
-      dispatch({ type: "error", payload: error.message });
+      dispatch({ type: "rejected", payload: error.message });
       return null;
     }
   };
@@ -84,13 +85,15 @@ export const UsersProvider = ({ children, loggedIn, userId }: props) => {
   };
 
   const fetchUser: fetchUserFn = async function (userId) {
-    try {
-      const usersRef = firestore.collection("users").doc(userId);
-      const res = await usersRef.get();
-      const data = await res.data();
+    if (userId) {
+      try {
+        const usersRef = firestore.collection("users").doc(userId);
+        const res = await usersRef.get();
+        const data = await res.data();
 
-      dispatch({ type: "user/loaded", payload: data as User });
-    } catch (error) {}
+        dispatch({ type: "user/loaded", payload: data as User });
+      } catch (error) {}
+    }
   };
 
   return (

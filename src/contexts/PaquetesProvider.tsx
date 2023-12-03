@@ -89,7 +89,6 @@ export const PaquetesProvider = ({ children }) => {
         const snapshot = await repartidoresRef.get();
         const repartidoresApi = [];
         snapshot.forEach((doc) => {
-          console.log(doc.id);
           const { nombre } = doc.data();
           const repartidorId = Number(doc.id);
 
