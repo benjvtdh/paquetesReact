@@ -46,10 +46,8 @@ function reducer(state, action) {
         ...state,
         isLoading: false,
         paquetesList: [
-          ...state.paquetesList.filter(
-            (paq) => paq.id !== action.payload.id,
-            action.payload.editedPaq
-          ),
+          ...state.paquetesList.filter((paq) => paq.id !== action.payload.id),
+          action.payload.editedPaquete,
         ],
       };
     case "repartidores/loaded":
@@ -146,7 +144,23 @@ export const PaquetesProvider = ({ children }) => {
     dispatch({ type: "paquete/delete", payload: objetoId });
   };
 
-  const updatePaquete: updatePaq = async function (objetoId) {};
+  const updatePaquete: updatePaq = async function (editedPaquete) {
+    try {
+      const paqueteRef = await firestore
+        .collection("paquetes")
+        .doc(editedPaquete.id);
+      const res = await paqueteRef.update(editedPaquete);
+      dispatch({
+        type: "paquete/update",
+        payload: { id: editedPaquete.id, editedPaquete },
+      });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error updating the paquete...",
+      });
+    }
+  };
 
   return (
     <PaquetesContext.Provider

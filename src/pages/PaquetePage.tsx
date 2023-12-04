@@ -25,14 +25,7 @@ import {
 
 import { useParams } from "react-router";
 
-import {
-  airplane,
-  calendarNumber,
-  checkmarkCircle,
-  closeCircle,
-  logoDropbox,
-  person,
-} from "ionicons/icons";
+import { airplane, logoDropbox, person } from "ionicons/icons";
 import { usePaquetes } from "../hooks/usePaquetes";
 import { useState } from "react";
 
@@ -41,21 +34,24 @@ interface RouteParams {
 }
 
 const PaquetePage: React.FC = () => {
-  const { paquetesList, repartidoresList, deletePaquete } = usePaquetes();
+  const { paquetesList, deletePaquete, repartidoresList, updatePaquete } =
+    usePaquetes();
 
   const { id } = useParams<RouteParams>();
   const paquete = paquetesList.find((paq) => paq.id === id);
-  const repartidor = repartidoresList.find(
-    (repartidor) => repartidor.repartidorId === paquete.repartidorId
-  );
 
   const handleBorrar = async () => {
     await deletePaquete(paquete.id);
   };
 
-  // const [objeto, setObjeto] = useState(paquete.objeto);
-  // const [repartidorId, setRepartidorId] = useState(paquete.repartidorId);
-  // const [enviado, setEnviado] = useState(paquete.enviado);
+  const handleUpdate = async () => {
+    const editedPaquete = { id, objeto, enviado, repartidorId };
+    await updatePaquete(editedPaquete);
+  };
+
+  const [objeto, setObjeto] = useState(paquete.objeto);
+  const [repartidorId, setRepartidorId] = useState(paquete.repartidorId);
+  const [enviado, setEnviado] = useState(paquete.enviado);
 
   return (
     <IonPage>
@@ -81,13 +77,13 @@ const PaquetePage: React.FC = () => {
                   icon={logoDropbox}
                 ></IonIcon>
                 <IonLabel>
-                  {/* <IonInput
+                  <IonInput
                     label="Objeto:"
                     value={objeto}
                     onIonInput={(e) => {
                       setObjeto(e.detail.value);
                     }}
-                  ></IonInput> */}
+                  ></IonInput>
                 </IonLabel>
               </IonItem>
               <IonItem>
@@ -95,9 +91,24 @@ const PaquetePage: React.FC = () => {
                   slot="start"
                   icon={person}
                 ></IonIcon>
-                <IonLabel>Repartidor: {repartidor.nombre} </IonLabel>
+                <IonLabel>
+                  <IonSelect
+                    label="Repartidor:"
+                    value={repartidorId}
+                    onIonChange={(e) => setRepartidorId(Number(e.detail.value))}
+                  >
+                    {repartidoresList.map((repartidor) => (
+                      <IonSelectOption
+                        key={repartidor.repartidorId}
+                        value={repartidor.repartidorId}
+                      >
+                        {repartidor.nombre}
+                      </IonSelectOption>
+                    ))}
+                  </IonSelect>
+                </IonLabel>
               </IonItem>
-              {/* 
+
               <IonItem>
                 <IonIcon
                   slot="start"
@@ -109,32 +120,23 @@ const PaquetePage: React.FC = () => {
                     value={enviado}
                     onIonChange={(e) => setEnviado(e.detail.value)}
                   >
-                    <IonSelectOption value={true}>
-                      <IonIcon
-                        className={"enviado"}
-                        icon={checkmarkCircle}
-                      ></IonIcon>
-                    </IonSelectOption>
-                    <IonSelectOption value={false}>
-                      <IonIcon
-                        className={"no-enviado"}
-                        icon={closeCircle}
-                      ></IonIcon>
-                    </IonSelectOption>
+                    <IonSelectOption value={true}>Enviado</IonSelectOption>
+                    <IonSelectOption value={false}>No enviado</IonSelectOption>
                   </IonSelect>
                 </IonLabel>
-              </IonItem> */}
-
-              <IonItem>
-                <IonIcon
-                  slot="start"
-                  icon={calendarNumber}
-                ></IonIcon>
-                <IonLabel>Fecha de entrega: </IonLabel>
               </IonItem>
             </IonList>
           </IonCardContent>
           <IonRow className="ion-justify-content-center">
+            <IonRouterLink routerLink="/">
+              <IonButton
+                onClick={handleUpdate}
+                color="primary"
+              >
+                Editar paquete
+              </IonButton>
+            </IonRouterLink>
+
             <IonRouterLink routerLink="/">
               <IonButton
                 onClick={handleBorrar}
