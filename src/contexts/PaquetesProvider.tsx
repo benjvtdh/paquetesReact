@@ -21,7 +21,7 @@ const initialState = {
 function reducer(state, action) {
   switch (action.type) {
     case "loading":
-      return { ...state, loading: true };
+      return { ...state, isLoading: true };
     case "paquetes/loaded":
       return { ...state, isLoading: false, paquetesList: action.payload };
 
@@ -66,32 +66,33 @@ export const PaquetesProvider = ({ children }) => {
   const [{ isLoading, paquetesList, repartidoresList, error }, dispatch] =
     useReducer(reducer, initialState);
 
-  useEffect(() => {
-    async function fetchPaquetes() {
-      dispatch({ type: "loading" });
-      try {
-        const paquetesRef = firestore.collection("paquetes");
-        const snapshot = await paquetesRef.get();
-        const paquetesApi = [];
-        snapshot.forEach((doc) => {
-          const { enviado, objeto, repartidorId } = doc.data();
-          const id = doc.id;
-          paquetesApi.push({
-            id,
-            enviado,
-            objeto,
-            repartidorId,
-          } as PaqueteInterface);
-        });
+  async function fetchPaquetes() {
+    dispatch({ type: "loading" });
+    try {
+      const paquetesRef = firestore.collection("paquetes");
+      const snapshot = await paquetesRef.get();
+      const paquetesApi = [];
+      snapshot.forEach((doc) => {
+        const { enviado, objeto, repartidorId } = doc.data();
+        const id = doc.id;
+        paquetesApi.push({
+          id,
+          enviado,
+          objeto,
+          repartidorId,
+        } as PaqueteInterface);
+      });
 
-        dispatch({ type: "paquetes/loaded", payload: paquetesApi });
-      } catch (error) {
-        dispatch({
-          type: "rejected",
-          payload: "There was an error loading paquetes...",
-        });
-      }
+      dispatch({ type: "paquetes/loaded", payload: paquetesApi });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error loading paquetes...",
+      });
     }
+  }
+
+  useEffect(() => {
     fetchPaquetes();
   }, []);
 
@@ -130,6 +131,7 @@ export const PaquetesProvider = ({ children }) => {
       const paquete = { objeto, enviado: false, repartidorId };
       const res = await firestore.collection("paquetes").add(paquete);
       dispatch({ type: "paquete/add", payload: paquete });
+      await fetchPaquetes();
     } catch (error) {
       dispatch({
         type: "rejected",

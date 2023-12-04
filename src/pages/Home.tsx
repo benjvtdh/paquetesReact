@@ -7,6 +7,7 @@ import {
   IonListHeader,
   IonPage,
   IonRow,
+  IonSpinner,
   IonTitle,
   IonToggle,
   IonToolbar,
@@ -35,27 +36,34 @@ const Home: React.FC = () => {
       </IonHeader>
       <IonContent>
         <IonList>
-          <IonListHeader>
-            <IonLabel>Listado de Paquetes</IonLabel>
-          </IonListHeader>
-          {paquetes.map((paq) => (
-            <Paquete
-              paquete={paq}
-              key={paq.id}
-            />
-          ))}
-          <IonRow className="ion-justify-content-center">
-            <IonCol size="6">
-              {/* <IonRouterLink routerLink="/agregar-paquete">
+          {isLoading && <IonSpinner></IonSpinner>}
+          {!isLoading && (
+            <>
+              <IonListHeader>
+                <IonLabel>Listado de Paquetes</IonLabel>
+              </IonListHeader>
+              {paquetes.map((paq) => (
+                <Paquete
+                  paquete={paq}
+                  key={paq.id}
+                />
+              ))}
+              <IonRow className="ion-justify-content-center">
+                <IonCol size="6">
+                  {/* <IonRouterLink routerLink="/agregar-paquete">
                 <IonButton shape="round">Agregar Paquete</IonButton>
               </IonRouterLink> */}
-              <IonToggle
-                onIonChange={() => setOrdenarNoEntrados((ordenar) => !ordenar)}
-              >
-                No entregados
-              </IonToggle>
-            </IonCol>
-          </IonRow>
+                  <IonToggle
+                    onIonChange={() =>
+                      setOrdenarNoEntrados((ordenar) => !ordenar)
+                    }
+                  >
+                    No entregados
+                  </IonToggle>
+                </IonCol>
+              </IonRow>
+            </>
+          )}
         </IonList>
         <IonList>
           <IonListHeader>Repartidores</IonListHeader>
