@@ -19,6 +19,7 @@ import { useEffect } from "react";
 
 // Protected Pages
 const AppTabs: React.FC = () => {
+  console.log("APP TABS");
   const { loggedIn } = useUser();
 
   // If user is not logged, is redirected to Login

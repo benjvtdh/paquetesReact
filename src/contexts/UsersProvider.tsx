@@ -52,7 +52,6 @@ export const UsersProvider = ({ children, loggedIn, userId }: props) => {
   useEffect(() => {
     async function fetchInit() {
       if (loggedIn && userId) {
-        console.log(userId);
         await fetchUser(userId);
       }
     }

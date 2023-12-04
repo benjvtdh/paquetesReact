@@ -17,8 +17,14 @@ interface Props {
 
 const Paquete: React.FC<Props> = ({ paquete }) => {
   return (
-    <IonItem button routerLink={`/user/paquete/${paquete.id}`}>
-      <IonIcon icon={cubeOutline} slot="start"></IonIcon>
+    <IonItem
+      button
+      routerLink={`/user/paquete/${paquete.id}`}
+    >
+      <IonIcon
+        icon={cubeOutline}
+        slot="start"
+      ></IonIcon>
       <IonLabel>ID: {paquete.id}</IonLabel>
       <IonLabel>{paquete.objeto}</IonLabel>
       <IonLabel>
@@ -28,7 +34,10 @@ const Paquete: React.FC<Props> = ({ paquete }) => {
           icon={paquete.enviado ? checkmarkCircle : closeCircle}
         ></IonIcon>
       </IonLabel>
-      <IonIcon icon={chevronForwardCircle} slot="end"></IonIcon>
+      <IonIcon
+        icon={chevronForwardCircle}
+        slot="end"
+      ></IonIcon>
     </IonItem>
   );
 };

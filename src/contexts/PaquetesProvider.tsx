@@ -1,11 +1,13 @@
 import { firestore } from "../firebase";
 import { PaquetesContext } from "./PaquetesContext";
 import { useEffect, useReducer } from "react";
+
 import {
   PaqueteInterface,
   RepartidorInterface,
   agregarPaq,
   deletePaq,
+  updatePaq,
 } from "../interfaces/paquetesInterface";
 
 const initialState = {
@@ -37,6 +39,18 @@ function reducer(state, action) {
         paquetesList: state.paquetesList.filter(
           (paq) => paq.id !== action.payload
         ),
+      };
+
+    case "paquete/update":
+      return {
+        ...state,
+        isLoading: false,
+        paquetesList: [
+          ...state.paquetesList.filter(
+            (paq) => paq.id !== action.payload.id,
+            action.payload.editedPaq
+          ),
+        ],
       };
     case "repartidores/loaded":
       return { ...state, isLoading: false, repartidoresList: action.payload };
@@ -79,7 +93,7 @@ export const PaquetesProvider = ({ children }) => {
       }
     }
     fetchPaquetes();
-  }, [paquetesList]);
+  }, []);
 
   useEffect(() => {
     async function fetchRepartidores() {
@@ -130,6 +144,8 @@ export const PaquetesProvider = ({ children }) => {
     dispatch({ type: "paquete/delete", payload: objetoId });
   };
 
+  const updatePaquete: updatePaq = async function (objetoId) {};
+
   return (
     <PaquetesContext.Provider
       value={{
@@ -139,6 +155,7 @@ export const PaquetesProvider = ({ children }) => {
         repartidoresList,
         agregarPaquete,
         deletePaquete,
+        updatePaquete,
       }}
     >
       {children}

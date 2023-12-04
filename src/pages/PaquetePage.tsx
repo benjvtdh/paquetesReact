@@ -10,12 +10,15 @@ import {
   IonContent,
   IonHeader,
   IonIcon,
+  IonInput,
   IonItem,
   IonLabel,
   IonList,
   IonPage,
   IonRouterLink,
   IonRow,
+  IonSelect,
+  IonSelectOption,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
@@ -27,9 +30,11 @@ import {
   calendarNumber,
   checkmarkCircle,
   closeCircle,
+  logoDropbox,
   person,
 } from "ionicons/icons";
 import { usePaquetes } from "../hooks/usePaquetes";
+import { useState } from "react";
 
 interface RouteParams {
   id: string;
@@ -48,6 +53,10 @@ const PaquetePage: React.FC = () => {
     await deletePaquete(paquete.id);
   };
 
+  // const [objeto, setObjeto] = useState(paquete.objeto);
+  // const [repartidorId, setRepartidorId] = useState(paquete.repartidorId);
+  // const [enviado, setEnviado] = useState(paquete.enviado);
+
   return (
     <IonPage>
       <IonHeader>
@@ -62,10 +71,25 @@ const PaquetePage: React.FC = () => {
         <IonCard>
           <IonCardHeader>
             <IonCardTitle>Paquete : {paquete.id}</IonCardTitle>
-            <IonCardSubtitle>{paquete.objeto}</IonCardSubtitle>
+            {/* <IonCardSubtitle>{paquete.objeto}</IonCardSubtitle> */}
           </IonCardHeader>
           <IonCardContent>
             <IonList>
+              <IonItem>
+                <IonIcon
+                  slot="start"
+                  icon={logoDropbox}
+                ></IonIcon>
+                <IonLabel>
+                  {/* <IonInput
+                    label="Objeto:"
+                    value={objeto}
+                    onIonInput={(e) => {
+                      setObjeto(e.detail.value);
+                    }}
+                  ></IonInput> */}
+                </IonLabel>
+              </IonItem>
               <IonItem>
                 <IonIcon
                   slot="start"
@@ -73,20 +97,33 @@ const PaquetePage: React.FC = () => {
                 ></IonIcon>
                 <IonLabel>Repartidor: {repartidor.nombre} </IonLabel>
               </IonItem>
-
+              {/* 
               <IonItem>
                 <IonIcon
                   slot="start"
                   icon={airplane}
                 ></IonIcon>
                 <IonLabel>
-                  Estado :
-                  <IonIcon
-                    className={paquete.enviado ? "enviado" : "no-enviado"}
-                    icon={paquete.enviado ? checkmarkCircle : closeCircle}
-                  ></IonIcon>
+                  <IonSelect
+                    label="Enviado:"
+                    value={enviado}
+                    onIonChange={(e) => setEnviado(e.detail.value)}
+                  >
+                    <IonSelectOption value={true}>
+                      <IonIcon
+                        className={"enviado"}
+                        icon={checkmarkCircle}
+                      ></IonIcon>
+                    </IonSelectOption>
+                    <IonSelectOption value={false}>
+                      <IonIcon
+                        className={"no-enviado"}
+                        icon={closeCircle}
+                      ></IonIcon>
+                    </IonSelectOption>
+                  </IonSelect>
                 </IonLabel>
-              </IonItem>
+              </IonItem> */}
 
               <IonItem>
                 <IonIcon

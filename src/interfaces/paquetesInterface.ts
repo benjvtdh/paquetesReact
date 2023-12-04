@@ -15,7 +15,9 @@ export interface IPaqueteContext {
   repartidoresList: RepartidorInterface[];
   agregarPaquete: agregarPaq;
   deletePaquete: deletePaq;
+  updatePaquete: updatePaq;
 }
 
 export type agregarPaq = (objetoPaquete: string, idRepartidor: number) => void;
 export type deletePaq = (objetoId: string) => void;
+export type updatePaq = (objetoId: string) => void;
