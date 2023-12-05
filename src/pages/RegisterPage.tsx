@@ -7,6 +7,7 @@ import {
   IonList,
   IonLoading,
   IonPage,
+  IonRow,
   IonSelect,
   IonSelectOption,
   IonTitle,
@@ -15,7 +16,6 @@ import {
 import { useState } from "react";
 import { authUser } from "../firebase";
 import { firestore } from "../firebase";
-import { usePaquetes } from "../hooks/usePaquetes";
 import { Redirect } from "react-router";
 import { useUser } from "../hooks/useUser";
 
@@ -81,7 +81,7 @@ const Register: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonTitle>Registrarse</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -159,13 +159,14 @@ const Register: React.FC = () => {
             ></IonInput>
           </IonItem>
         </IonList>
-
-        <IonButton
-          onClick={handleValidation}
-          shape="round"
-        >
-          Crear cuenta
-        </IonButton>
+        <IonRow className="ion-justify-content-center">
+          <IonButton
+            onClick={handleValidation}
+            shape="round"
+          >
+            Crear cuenta
+          </IonButton>
+        </IonRow>
         <IonButton
           expand="block"
           fill="clear"

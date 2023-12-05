@@ -30,7 +30,7 @@ const Home: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonTitle>Home</IonTitle>
         </IonToolbar>
       </IonHeader>

@@ -1,20 +1,22 @@
 import {
   IonButton,
+  IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
   IonInput,
   IonItem,
   IonList,
   IonLoading,
   IonPage,
+  IonRow,
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Redirect } from "react-router";
-
 import { useUser } from "../hooks/useUser";
-import { useAuth } from "../hooks/useAuth";
+import "./Login.css";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -33,51 +35,57 @@ const Login: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonTitle>Login</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
-        <IonList>
-          <IonItem>
-            <IonInput
-              type="email"
-              placeholder="test@gmail.com"
-              label="Correo"
-              labelPlacement="floating"
-              value={email}
-              onIonInput={(event) => setEmail(event.detail.value)}
-            ></IonInput>
-          </IonItem>
+        <div className="center">
+          <IonList>
+            <IonItem>
+              <IonInput
+                type="email"
+                placeholder="test@gmail.com"
+                label="Correo"
+                labelPlacement="floating"
+                value={email}
+                onIonInput={(event) => setEmail(event.detail.value)}
+                className={error ? "ion-invalid ion-touched" : ""}
+              ></IonInput>
+            </IonItem>
 
-          <IonItem>
-            <IonInput
-              label="Contraseña"
-              type="password"
-              labelPlacement="floating"
-              placeholder="*********"
-              value={password}
-              onIonInput={(event) => setPassword(event.detail.value)}
-              errorText="Contraseña o correo incorrecto"
-              className={error ? "ion-invalid ion-touched" : ""}
-            ></IonInput>
-          </IonItem>
-        </IonList>
+            <IonItem>
+              <IonInput
+                label="Contraseña"
+                type="password"
+                labelPlacement="floating"
+                placeholder="*********"
+                value={password}
+                onIonInput={(event) => setPassword(event.detail.value)}
+                className={error ? "ion-invalid ion-touched" : ""}
+              ></IonInput>
+            </IonItem>
+            {error && <p className="error">Contraseña o correo incorrecto</p>}
+          </IonList>
 
-        <IonButton
-          onClick={handleLogin}
-          shape="round"
-        >
-          Ingresar
-        </IonButton>
-        <IonButton
-          expand="block"
-          fill="clear"
-          routerLink="/register"
-        >
-          ¿No tienes una cuenta?
-        </IonButton>
-        <IonLoading isOpen={isLoading}></IonLoading>
+          <IonRow className="ion-justify-content-center">
+            <IonButton
+              onClick={handleLogin}
+              shape="round"
+            >
+              Ingresar
+            </IonButton>
+          </IonRow>
+          <IonButton
+            expand="full"
+            fill="clear"
+            routerLink="/register"
+          >
+            ¿No tienes una cuenta?
+          </IonButton>
+
+          <IonLoading isOpen={isLoading}></IonLoading>
+        </div>
       </IonContent>
     </IonPage>
   );

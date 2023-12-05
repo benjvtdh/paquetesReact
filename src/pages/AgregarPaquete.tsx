@@ -9,6 +9,7 @@ import {
   IonList,
   IonPage,
   IonRouterLink,
+  IonRow,
   IonSelect,
   IonSelectOption,
   IonTitle,
@@ -30,10 +31,7 @@ const AgregarPaquete: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton></IonBackButton>
-          </IonButtons>
+        <IonToolbar color="dark">
           <IonTitle>Agregar Paquete</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -66,15 +64,16 @@ const AgregarPaquete: React.FC = () => {
               ))}
             </IonSelect>
           </IonItem>
-
-          <IonRouterLink routerLink="/">
-            <IonButton
-              onClick={() => handleAgregarSetear()}
-              shape="round"
-            >
-              Agregar Paquete
-            </IonButton>
-          </IonRouterLink>
+          <IonRow className="ion-justify-content-center">
+            <IonRouterLink routerLink="/">
+              <IonButton
+                onClick={() => handleAgregarSetear()}
+                shape="round"
+              >
+                Agregar Paquete
+              </IonButton>
+            </IonRouterLink>
+          </IonRow>
         </IonList>
       </IonContent>
     </IonPage>

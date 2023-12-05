@@ -56,7 +56,7 @@ const PaquetePage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonButtons slot="start">
             <IonBackButton />
           </IonButtons>

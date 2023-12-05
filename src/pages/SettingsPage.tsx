@@ -17,7 +17,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 
-import { callOutline, person } from "ionicons/icons";
+import { callOutline, medkitOutline, person } from "ionicons/icons";
 import { useUser } from "../hooks/useUser";
 import { useEffect } from "react";
 
@@ -27,7 +27,7 @@ const SettingsPage: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
+        <IonToolbar color="dark">
           <IonTitle>Configuración</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -52,11 +52,14 @@ const SettingsPage: React.FC = () => {
                   slot="start"
                   icon={callOutline}
                 ></IonIcon>
-                <IonLabel>Número de teléfono : {user?.cellPhone}</IonLabel>
+                <IonLabel>Teléfono : {user?.cellPhone}</IonLabel>
               </IonItem>
 
               <IonItem>
-                {/* <IonIcon slot="start" icon={calendarNumber}></IonIcon> */}
+                <IonIcon
+                  slot="start"
+                  icon={medkitOutline}
+                ></IonIcon>
                 <IonLabel>Edad: {user?.age}</IonLabel>
               </IonItem>
             </IonList>

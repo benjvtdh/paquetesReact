@@ -25,7 +25,7 @@ const Paquete: React.FC<Props> = ({ paquete }) => {
         icon={cubeOutline}
         slot="start"
       ></IonIcon>
-      <IonLabel>ID: {paquete.id}</IonLabel>
+      {/* <IonLabel>ID: {paquete.id}</IonLabel> */}
       <IonLabel>{paquete.objeto}</IonLabel>
       <IonLabel>
         <b>Estado: </b>
